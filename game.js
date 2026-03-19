@@ -304,6 +304,27 @@ function setupRetry() {
     switchScene('start');
   });
 }
+// ── Checkpoint Loader System ──────────────────
+const Checkpoints = {
+  1: () => CP1.load(),
+  2: () => CP2.load(),
+  // future:
+  // 3: () => CP3.load(),
+  // 4: () => CP4.load(),
+};
+
+function loadCheckpoint(num) {
+  GameState.currentCP = num;
+
+  const cpEl = document.getElementById('hudCheckpoint');
+  if (cpEl) cpEl.textContent = `${num}/4`;
+
+  if (Checkpoints[num]) {
+    Checkpoints[num]();
+  } else {
+    console.warn("Checkpoint not found:", num);
+  }
+}
 
 // ═══════════════════════════════════════════════
 //  INIT

@@ -362,7 +362,7 @@ const CP1 = (() => {
         setTimeout(() => {
             overlay.classList.remove('visible');
             if (typeof CP2 !== 'undefined' && typeof CP2.load === 'function') {
-                CP2.load();
+                 loadCheckpoint(2);
             } else {
                 // CP2 not built yet — show placeholder
                 const scene = document.getElementById('gameScene');
