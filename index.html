@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Castle Breach — Save Your Princess</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 1 — START SCREEN
+  ════════════════════════════════════════ -->
+  <div id="screen-start" class="screen active">
+    <div class="crt-scanlines"></div>
+    <div class="crt-vignette"></div>
+    <div class="bg-grid"></div>
+    <div class="stars" id="stars"></div>
+
+    <!-- Success overlay shown after registration -->
+    <div class="success-overlay" id="successScreen">
+      <div class="success-title">PLAYER REGISTERED!</div>
+      <div class="success-name" id="successName"></div>
+      <div class="success-await">AWAITING GAME START...</div>
+    </div>
+
+    <div class="start-content">
+      <div class="insert-coin">— INSERT COIN —</div>
+
+      <!-- Pixel castle (drawn by JS) -->
+      <div class="castle-art" id="castleArt"></div>
+
+      <div class="title-wrap">
+        <span class="title-main">CASTLE BREACH</span>
+        <span class="title-sub">✦ SAVE YOUR PRINCESS ✦</span>
+      </div>
+
+      <div class="score-bar">
+        <div class="score-item">
+          <span class="score-label">HI-SCORE</span>
+          <span class="score-val" id="hiScore">00000</span>
+        </div>
+        <div class="score-item">
+          <span class="score-label">PLAYERS</span>
+          <span class="score-val" id="playerCount">00</span>
+        </div>
+        <div class="score-item">
+          <span class="score-label">TIME LIM</span>
+          <span class="score-val">30:00</span>
+        </div>
+      </div>
+
+      <div class="pixel-divider" id="pixelDivider"></div>
+
+      <div class="pixel-frame">
+        <div class="input-section">
+          <div class="input-label">ENTER PLAYER NAME</div>
+          <input
+            class="name-input"
+            id="nameInput"
+            type="text"
+            maxlength="16"
+            placeholder="YOUR NAME HERE"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <div class="error-msg" id="errorMsg">NAME REQUIRED!</div>
+          <button class="game-btn" id="startBtn">► START GAME</button>
+          <div class="load-bar-wrap" id="loadBar">
+            <div class="load-bar-inner" id="loadBarInner"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="credits">
+        © CASTLE BREACH SYSTEMS 1984 &nbsp;·&nbsp; ALL RIGHTS RESERVED<br/>
+        CHECKPOINTS: 4 &nbsp;·&nbsp; FLAGS: 8 &nbsp;·&nbsp; DIFFICULTY: LEGENDARY
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 2 — GAME SCREEN
+  ════════════════════════════════════════ -->
+  <div id="screen-game" class="screen">
+    <div class="crt-scanlines"></div>
+    <div class="crt-vignette"></div>
+    <div class="bg-grid"></div>
+
+    <div class="hud">
+      <div class="hud-item">
+        <span class="hud-label">PLAYER</span>
+        <span class="hud-val" id="hudPlayer">---</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">FLAGS</span>
+        <span class="hud-val" id="hudFlags">0/4</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">TIME</span>
+        <span class="hud-val timer-display" id="timerDisplay">30:00</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">CHECKPOINT</span>
+        <span class="hud-val" id="hudCheckpoint">1/4</span>
+      </div>
+    </div>
+
+    <!-- Checkpoint scenes load here -->
+    <div class="game-scene" id="gameScene">
+      <div class="scene-placeholder">
+        <span class="scene-title">CHECKPOINT 1</span>
+        <span class="scene-sub">CASTLE GATE — LOADING...</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 3 — GAME OVER
+  ════════════════════════════════════════ -->
+  <div id="screen-gameover" class="screen">
+    <div class="crt-scanlines"></div>
+    <div class="crt-vignette"></div>
+    <div class="bg-grid"></div>
+
+    <div class="gameover-content">
+      <div class="gameover-title">GAME OVER</div>
+      <div class="gameover-stats">
+        <div class="stat-row">
+          <span class="stat-label">PLAYER</span>
+          <span class="stat-val" id="goPlayer">---</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">FLAGS CAPTURED</span>
+          <span class="stat-val" id="goFlags">0 / 4</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">TOTAL TIME</span>
+          <span class="stat-val" id="goTime">30:00</span>
+        </div>
+      </div>
+      <button class="game-btn" id="retryBtn">► PLAY AGAIN</button>
+    </div>
+  </div>
+
+  <script src="api.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
