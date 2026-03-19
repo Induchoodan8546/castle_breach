@@ -6,72 +6,72 @@
 
 const CP1 = (() => {
 
-  // ── Puzzle data ────────────────────────────
-  const ENCODED_MESSAGE = 'ZmxhZ3tnYXRlX29wZW59';
-  const CORRECT_FLAG    = 'flag{gate_open}';
+    // ── Puzzle data ────────────────────────────
+    const ENCODED_MESSAGE = 'ZmxhZ3tnYXRlX29wZW59';
+    const CORRECT_FLAG = 'flag{gate_open}';
 
-  // ── Track which objects have been examined ─
-  const examined = {
-    torch1:  false,
-    torch2:  false,
-    statue:  false,
-    shield:  false,
-    chains:  false,
-    sign:    false,
-  };
+    // ── Track which objects have been examined ─
+    const examined = {
+        torch1: false,
+        torch2: false,
+        statue: false,
+        shield: false,
+        chains: false,
+        sign: false,
+    };
 
-  let flagSubmitted = false;
+    let flagSubmitted = false;
 
-  // ── Object content (what shows in popup) ───
-  const objectData = {
-    torch1: {
-      title: 'WALL TORCH',
-      icon:  '🔥',
-      text:  'A flickering torch mounted on the ancient stone wall. The flame casts dancing shadows across the gate. Nothing unusual here... but something feels warm nearby.',
-      clue:  false,
-    },
-    torch2: {
-      title: 'WALL TORCH',
-      icon:  '🔥',
-      text:  'Another torch, identical to the first. The smoke trails upward in a strange spiral pattern. A red herring? Perhaps.',
-      clue:  false,
-    },
-    statue: {
-      title: 'STONE STATUE',
-      icon:  '🗿',
-      text:  'A crumbling stone statue of an ancient knight. Its eyes seem to follow you. Inscribed on the base: "ONLY THE WISE MAY DECODE WHAT IS HIDDEN." Whatever that means...',
-      clue:  false,
-    },
-    shield: {
-      title: 'IRON SHIELD',
-      icon:  '🛡️',
-      text:  'A battered iron shield hanging on the wall. The crest has been scratched off. On the back, someone has scrawled: "The answer is not what you see, but what you read."',
-      clue:  false,
-    },
-    chains: {
-      title: 'GATE CHAINS',
-      icon:  '⛓️',
-      text:  'Massive iron chains securing the castle gate. Each link is engraved with a symbol. The chains rattle as you touch them. The gate will not open by force alone — a code is needed.',
-      clue:  false,
-    },
-    sign: {
-      title: '⚠️ ENCODED SIGN',
-      icon:  '📜',
-      text:  'A weathered wooden sign hangs from the gate. Strange characters are burned into the wood:',
-      code:  ENCODED_MESSAGE,
-      hint:  'This looks like it could be decoded... What encoding scheme uses only letters, numbers, + and / characters?',
-      clue:  true,
-    },
-  };
+    // ── Object content (what shows in popup) ───
+    const objectData = {
+        torch1: {
+            title: 'WALL TORCH',
+            icon: '🔥',
+            text: 'A flickering torch mounted on the ancient stone wall. The flame casts dancing shadows across the gate. Nothing unusual here... but something feels warm nearby.',
+            clue: false,
+        },
+        torch2: {
+            title: 'WALL TORCH',
+            icon: '🔥',
+            text: 'Another torch, identical to the first. The smoke trails upward in a strange spiral pattern. A red herring? Perhaps.',
+            clue: false,
+        },
+        statue: {
+            title: 'STONE STATUE',
+            icon: '🗿',
+            text: 'A crumbling stone statue of an ancient knight. Its eyes seem to follow you. Inscribed on the base: "ONLY THE WISE MAY DECODE WHAT IS HIDDEN." Whatever that means...',
+            clue: false,
+        },
+        shield: {
+            title: 'IRON SHIELD',
+            icon: '🛡️',
+            text: 'A battered iron shield hanging on the wall. The crest has been scratched off. On the back, someone has scrawled: "The answer is not what you see, but what you read."',
+            clue: false,
+        },
+        chains: {
+            title: 'GATE CHAINS',
+            icon: '⛓️',
+            text: 'Massive iron chains securing the castle gate. Each link is engraved with a symbol. The chains rattle as you touch them. The gate will not open by force alone — a code is needed.',
+            clue: false,
+        },
+        sign: {
+            title: '⚠️ ENCODED SIGN',
+            icon: '📜',
+            text: 'A weathered wooden sign hangs from the gate. Strange characters are burned into the wood:',
+            code: ENCODED_MESSAGE,
+            hint: 'This looks like it could be decoded... What encoding scheme uses only letters, numbers, + and / characters?',
+            clue: true,
+        },
+    };
 
-  // ═══════════════════════════════════════════
-  //  BUILD THE SCENE HTML
-  // ═══════════════════════════════════════════
-  function buildScene() {
-    const scene = document.getElementById('gameScene');
-    if (!scene) return;
+    // ═══════════════════════════════════════════
+    //  BUILD THE SCENE HTML
+    // ═══════════════════════════════════════════
+    function buildScene() {
+        const scene = document.getElementById('gameScene');
+        if (!scene) return;
 
-    scene.innerHTML = `
+        scene.innerHTML = `
       <div class="cp1-scene" id="cp1Scene">
 
         <!-- Sky -->
@@ -162,10 +162,10 @@ const CP1 = (() => {
           <div class="sign-rope sign-rope-left"></div>
           <div class="sign-rope sign-rope-right"></div>
           <div class="sign-board">
-            <div class="sign-text">ENCODED</div>
-            <div class="sign-text sign-text-sm">⚠ EXAMINE ME</div>
+            <div class="sign-text">NOTICE</div>
+            <div class="sign-text sign-text-sm">READ ME</div>
           </div>
-          <div class="obj-label sign-label">SIGN ⚠</div>
+          <div class="obj-label sign-label">SIGN</div>
         </div>
 
         <!-- Ground -->
@@ -229,177 +229,177 @@ const CP1 = (() => {
       </div>
     `;
 
-    // Build sky stars
-    buildSkyStars();
+        // Build sky stars
+        buildSkyStars();
 
-    // Wire up all object clicks
-    document.querySelectorAll('.cp1-object').forEach(el => {
-      el.addEventListener('click', () => {
-        const key = el.dataset.obj;
-        if (key) openModal(key);
-      });
-    });
+        // Wire up all object clicks
+        document.querySelectorAll('.cp1-object').forEach(el => {
+            el.addEventListener('click', () => {
+                const key = el.dataset.obj;
+                if (key) openModal(key);
+            });
+        });
 
-    // Modal close
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    document.getElementById('cp1Modal').addEventListener('click', e => {
-      if (e.target.id === 'cp1Modal') closeModal();
-    });
+        // Modal close
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('cp1Modal').addEventListener('click', e => {
+            if (e.target.id === 'cp1Modal') closeModal();
+        });
 
-    // Flag submit
-    document.getElementById('flagSubmitBtn').addEventListener('click', submitFlag);
-    document.getElementById('flagInput').addEventListener('keydown', e => {
-      if (e.key === 'Enter') submitFlag();
-    });
-  }
-
-  // ── Build sky stars ───────────────────────
-  function buildSkyStars() {
-    const container = document.getElementById('cp1Stars');
-    if (!container) return;
-    for (let i = 0; i < 40; i++) {
-      const s = document.createElement('div');
-      s.className = 'cp1-star';
-      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*60}%;width:${Math.random()<0.3?2:1}px;height:${Math.random()<0.3?2:1}px;animation-delay:${-Math.random()*4}s;animation-duration:${1.5+Math.random()*3}s`;
-      container.appendChild(s);
-    }
-  }
-
-  // ── Open object modal ─────────────────────
-  let attempts = 0;
-
-  function openModal(key) {
-    const data = objectData[key];
-    if (!data) return;
-
-    examined[key] = true;
-
-    document.getElementById('modalIcon').textContent  = data.icon || '👁';
-    document.getElementById('modalTitle').textContent = data.title;
-    document.getElementById('modalText').textContent  = data.text;
-
-    const codeWrap = document.getElementById('modalCodeWrap');
-    const codeEl   = document.getElementById('modalCode');
-    const hintEl   = document.getElementById('modalHint');
-
-    if (data.clue && data.code) {
-      codeWrap.style.display = 'block';
-      codeEl.textContent     = data.code;
-      hintEl.textContent     = data.hint || '';
-      // Show flag panel when clue is found
-      document.getElementById('cp1FlagPanel').classList.add('visible');
-    } else {
-      codeWrap.style.display = 'none';
+        // Flag submit
+        document.getElementById('flagSubmitBtn').addEventListener('click', submitFlag);
+        document.getElementById('flagInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') submitFlag();
+        });
     }
 
-    document.getElementById('cp1Modal').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('cp1Modal').classList.remove('open');
-  }
-
-  // ── Submit flag ───────────────────────────
-  function submitFlag() {
-    if (flagSubmitted) return;
-
-    const input    = document.getElementById('flagInput');
-    const feedback = document.getElementById('flagFeedback');
-    const attemptsEl = document.getElementById('flagAttempts');
-
-    const answer = input.value.trim().toLowerCase();
-    attempts++;
-    attemptsEl.textContent = `ATTEMPTS: ${attempts}`;
-
-    if (answer === CORRECT_FLAG) {
-      // ── CORRECT ──
-      flagSubmitted = true;
-      feedback.textContent  = '✅ CORRECT! FLAG CAPTURED!';
-      feedback.className    = 'flag-feedback success';
-      input.disabled        = true;
-      document.getElementById('flagSubmitBtn').disabled = true;
-
-      // Call game engine to record flag
-      if (typeof captureFlag === 'function') captureFlag(1);
-
-      // Validate with backend
-      if (typeof API !== 'undefined') {
-        API.validateFlag(GameState.teamId, 1, answer).catch(() => {});
-      }
-
-      // Animate gate opening after short delay
-      setTimeout(() => {
-        closeModal();
-        openGate();
-      }, 1200);
-
-    } else {
-      // ── WRONG ──
-      feedback.textContent = '❌ WRONG FLAG. TRY AGAIN.';
-      feedback.className   = 'flag-feedback error';
-      input.value          = '';
-      input.classList.add('shake');
-      setTimeout(() => input.classList.remove('shake'), 500);
+    // ── Build sky stars ───────────────────────
+    function buildSkyStars() {
+        const container = document.getElementById('cp1Stars');
+        if (!container) return;
+        for (let i = 0; i < 40; i++) {
+            const s = document.createElement('div');
+            s.className = 'cp1-star';
+            s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 60}%;width:${Math.random() < 0.3 ? 2 : 1}px;height:${Math.random() < 0.3 ? 2 : 1}px;animation-delay:${-Math.random() * 4}s;animation-duration:${1.5 + Math.random() * 3}s`;
+            container.appendChild(s);
+        }
     }
-  }
 
-  // ── Gate opening animation ────────────────
-  function openGate() {
-    const portcullis = document.getElementById('gatePortcullis');
-    const leftDoor   = document.getElementById('gateDoorLeft');
-    const rightDoor  = document.getElementById('gateDoorRight');
-    const overlay    = document.getElementById('gateOpenOverlay');
+    // ── Open object modal ─────────────────────
+    let attempts = 0;
 
-    if (portcullis) portcullis.classList.add('rising');
-    if (leftDoor)   leftDoor.classList.add('opening-left');
-    if (rightDoor)  rightDoor.classList.add('opening-right');
+    function openModal(key) {
+        const data = objectData[key];
+        if (!data) return;
 
-    setTimeout(() => {
-      overlay.classList.add('visible');
-    }, 800);
+        examined[key] = true;
 
-    // Load CP2 after animation
-    setTimeout(() => {
-      overlay.classList.remove('visible');
-      if (typeof CP2 !== 'undefined' && typeof CP2.load === 'function') {
-        CP2.load();
-      } else {
-        // CP2 not built yet — show placeholder
-        const scene = document.getElementById('gameScene');
-        if (scene) {
-          scene.innerHTML = `
+        document.getElementById('modalIcon').textContent = data.icon || '👁';
+        document.getElementById('modalTitle').textContent = data.title;
+        document.getElementById('modalText').textContent = data.text;
+
+        const codeWrap = document.getElementById('modalCodeWrap');
+        const codeEl = document.getElementById('modalCode');
+        const hintEl = document.getElementById('modalHint');
+
+        if (data.clue && data.code) {
+            codeWrap.style.display = 'block';
+            codeEl.textContent = data.code;
+            hintEl.textContent = data.hint || '';
+            // Show flag panel when clue is found
+            document.getElementById('cp1FlagPanel').classList.add('visible');
+        } else {
+            codeWrap.style.display = 'none';
+        }
+
+        document.getElementById('cp1Modal').classList.add('open');
+    }
+
+    function closeModal() {
+        document.getElementById('cp1Modal').classList.remove('open');
+    }
+
+    // ── Submit flag ───────────────────────────
+    function submitFlag() {
+        if (flagSubmitted) return;
+
+        const input = document.getElementById('flagInput');
+        const feedback = document.getElementById('flagFeedback');
+        const attemptsEl = document.getElementById('flagAttempts');
+
+        const answer = input.value.trim().toLowerCase();
+        attempts++;
+        attemptsEl.textContent = `ATTEMPTS: ${attempts}`;
+
+        if (answer === CORRECT_FLAG) {
+            // ── CORRECT ──
+            flagSubmitted = true;
+            feedback.textContent = '✅ CORRECT! FLAG CAPTURED!';
+            feedback.className = 'flag-feedback success';
+            input.disabled = true;
+            document.getElementById('flagSubmitBtn').disabled = true;
+
+            // Call game engine to record flag
+            if (typeof captureFlag === 'function') captureFlag(1);
+
+            // Validate with backend
+            if (typeof API !== 'undefined') {
+                API.validateFlag(GameState.teamId, 1, answer).catch(() => { });
+            }
+
+            // Animate gate opening after short delay
+            setTimeout(() => {
+                closeModal();
+                openGate();
+            }, 1200);
+
+        } else {
+            // ── WRONG ──
+            feedback.textContent = '❌ WRONG FLAG. TRY AGAIN.';
+            feedback.className = 'flag-feedback error';
+            input.value = '';
+            input.classList.add('shake');
+            setTimeout(() => input.classList.remove('shake'), 500);
+        }
+    }
+
+    // ── Gate opening animation ────────────────
+    function openGate() {
+        const portcullis = document.getElementById('gatePortcullis');
+        const leftDoor = document.getElementById('gateDoorLeft');
+        const rightDoor = document.getElementById('gateDoorRight');
+        const overlay = document.getElementById('gateOpenOverlay');
+
+        if (portcullis) portcullis.classList.add('rising');
+        if (leftDoor) leftDoor.classList.add('opening-left');
+        if (rightDoor) rightDoor.classList.add('opening-right');
+
+        setTimeout(() => {
+            overlay.classList.add('visible');
+        }, 800);
+
+        // Load CP2 after animation
+        setTimeout(() => {
+            overlay.classList.remove('visible');
+            if (typeof CP2 !== 'undefined' && typeof CP2.load === 'function') {
+                CP2.load();
+            } else {
+                // CP2 not built yet — show placeholder
+                const scene = document.getElementById('gameScene');
+                if (scene) {
+                    scene.innerHTML = `
             <div style="display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;z-index:10;">
               <div style="font-family:'Press Start 2P',monospace;font-size:18px;color:#ff4400;text-shadow:0 0 14px #cc2200;animation:flicker 3s infinite;">CHECKPOINT 2</div>
               <div style="font-family:'VT323',monospace;font-size:22px;color:#ff8800;letter-spacing:3px;animation:blink 1s step-end infinite;">HALL OF PATHS — COMING NEXT</div>
             </div>`;
-        }
-        // Update HUD
-        if (typeof GameState !== 'undefined') {
-          GameState.currentCP = 2;
-          const cpEl = document.getElementById('hudCheckpoint');
-          if (cpEl) cpEl.textContent = '2/4';
-        }
-      }
-    }, 3500);
-  }
+                }
+                // Update HUD
+                if (typeof GameState !== 'undefined') {
+                    GameState.currentCP = 2;
+                    const cpEl = document.getElementById('hudCheckpoint');
+                    if (cpEl) cpEl.textContent = '2/4';
+                }
+            }
+        }, 3500);
+    }
 
-  // ── Public load function ──────────────────
-  function load() {
-    flagSubmitted = false;
-    attempts      = 0;
-    Object.keys(examined).forEach(k => examined[k] = false);
-    buildScene();
-    injectStyles();
-  }
+    // ── Public load function ──────────────────
+    function load() {
+        flagSubmitted = false;
+        attempts = 0;
+        Object.keys(examined).forEach(k => examined[k] = false);
+        buildScene();
+        injectStyles();
+    }
 
-  // ═══════════════════════════════════════════
-  //  INJECT CP1 STYLES
-  // ═══════════════════════════════════════════
-  function injectStyles() {
-    if (document.getElementById('cp1-styles')) return;
-    const style = document.createElement('style');
-    style.id = 'cp1-styles';
-    style.textContent = `
+    // ═══════════════════════════════════════════
+    //  INJECT CP1 STYLES
+    // ═══════════════════════════════════════════
+    function injectStyles() {
+        if (document.getElementById('cp1-styles')) return;
+        const style = document.createElement('style');
+        style.id = 'cp1-styles';
+        style.textContent = `
 
     /* ── Scene container ── */
     .cp1-scene {
@@ -784,8 +784,8 @@ const CP1 = (() => {
 
     /* ══ FLAG PANEL ══════════════════════════ */
     .cp1-flag-panel {
-      position: absolute; bottom: 64px; left: 50%;
-      transform: translateX(-50%);
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
       width: 92%; max-width: 520px;
       z-index: 15;
       opacity: 0; pointer-events: none;
@@ -867,10 +867,10 @@ const CP1 = (() => {
       letter-spacing: 3px;
     }
     `;
-    document.head.appendChild(style);
-  }
+        document.head.appendChild(style);
+    }
 
-  // ── Public API ────────────────────────────
-  return { load };
+    // ── Public API ────────────────────────────
+    return { load };
 
 })();
