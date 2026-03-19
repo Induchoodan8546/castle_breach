@@ -106,7 +106,8 @@ function beginGame(playerName, teamId) {
 
   switchScene('game');
   startTimer();
-  // loadCheckpoint(1);  ← uncomment when CP1 is ready (Day 2)
+  // Load Checkpoint 1
+  if (typeof CP1 !== 'undefined') CP1.load();
 }
 
 // ═══════════════════════════════════════════════
