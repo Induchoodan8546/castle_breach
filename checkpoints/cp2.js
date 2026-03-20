@@ -137,12 +137,11 @@ const CP2 = (() => {
               animation:btn-pulse 2s ease-in-out infinite;">► ENTER</div>
           </div>
 
-          <!-- HALL C -->
           <div id="hallC" onclick="CP2._open('C')" style="
             width:150px; min-height:220px;
-            background:linear-gradient(180deg,#010000,#0d0300);
+            background:linear-gradient(180deg,#0a0200,#1a0800);
             border:2px solid #ff4400;
-            box-shadow:0 0 18px rgba(255,68,0,0.4),inset 0 0 30px rgba(0,0,0,0.9);
+            box-shadow:0 0 18px rgba(255,68,0,0.4),inset 0 0 30px rgba(0,0,0,0.8);
             cursor:pointer;
             display:flex;flex-direction:column;
             align-items:center;justify-content:space-between;
@@ -150,9 +149,9 @@ const CP2 = (() => {
             transition:box-shadow 0.2s,transform 0.1s;
             position:relative;
           "
-          onmouseover="this.style.boxShadow='0 0 35px rgba(255,100,0,0.7),inset 0 0 30px rgba(0,0,0,0.9)';this.style.transform='scale(1.05)';"
-          onmouseout="this.style.boxShadow='0 0 18px rgba(255,68,0,0.4),inset 0 0 30px rgba(0,0,0,0.9)';this.style.transform='scale(1)';">
-            <div style="position:absolute;inset:15px 20px;background:radial-gradient(ellipse at center,#000,transparent);pointer-events:none;"></div>
+          onmouseover="this.style.boxShadow='0 0 35px rgba(255,100,0,0.7),inset 0 0 30px rgba(0,0,0,0.8)';this.style.transform='scale(1.05)';"
+          onmouseout="this.style.boxShadow='0 0 18px rgba(255,68,0,0.4),inset 0 0 30px rgba(0,0,0,0.8)';this.style.transform='scale(1)';">
+            <div style="position:absolute;inset:15px 20px;background:radial-gradient(ellipse at center,#050100,transparent);pointer-events:none;"></div>
             <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:#ffcc00;
               text-shadow:0 0 6px #ffaa00;letter-spacing:1px;text-align:center;
               word-break:break-all;user-select:text;cursor:text;z-index:2;">
