@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard — Castle Breach</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body class="retro-theme">
+  <div class="crt-scanlines"></div>
+  <div class="crt-vignette"></div>
+  <div class="crt-flicker"></div>
+  <div class="bg-grid"></div>
+
+  <div class="container">
+    <header>
+      <div class="title-wrap">
+        <h1 class="glitch" data-text="HALL OF HEROES">HALL OF HEROES</h1>
+        <p class="subtitle">CASTLE BREACH LIVE LEADERBOARD</p>
+      </div>
+    </header>
+
+    <main>
+      <div class="leaderboard-frame">
+        <div class="stats-header">
+          <div class="stat-item">
+            <span class="label">LIVE UPDATES:</span>
+            <span id="ws-status" class="status-indicator offline">OFFLINE</span>
+          </div>
+          <div class="stat-item">
+            <span class="label">TOTAL TEAMS:</span>
+            <span id="team-count" class="value">00</span>
+          </div>
+        </div>
+
+        <div class="leaderboard-table-container">
+          <table id="leaderboard-table">
+            <thead>
+              <tr>
+                <th class="rank">#</th>
+                <th class="name">NAME</th>
+                <th class="flags">FLAGS</th>
+                <th class="time">TIME TAKEN</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-body">
+              <!-- Entries will be populated here -->
+              <tr class="loading">
+                <td colspan="4">INITIALIZING SYSTEM...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>© CASTLE BREACH SYSTEMS 1984 · ALL RIGHTS RESERVED</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

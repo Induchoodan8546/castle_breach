@@ -247,9 +247,6 @@ const CP1 = (() => {
             if (typeof Audio !== 'undefined') Audio.play('flagCaptured');
 
             if (typeof captureFlag === 'function') captureFlag(1);
-            if (typeof API !== 'undefined') {
-                API.validateFlag(GameState.teamId, 1, answer).catch(() => {});
-            }
 
             setTimeout(() => {
                 closeModal();

@@ -78,7 +78,7 @@ function captureFlag(checkpointNum) {
     GameState.checkpointTimes[checkpointNum] = getElapsed();
     document.getElementById('hudFlags').textContent =
         `${GameState.flagsCaptured}/${GameState.totalFlags}`;
-    API.updateScore(GameState.teamId, checkpointNum, getElapsed());
+    API.SubmitScore(checkpointNum, getElapsed());
 }
 
 // ── Game Over ──────────────────────────────────
@@ -256,6 +256,7 @@ function handleStart() {
             GameState.playerName = name;
             GameState.teamId = data.teamId || null;
             localStorage.setItem('playerName', name);
+			localStorage.setItem('Token', data.token);
             showSuccess(name);
         })
         .catch(() => {

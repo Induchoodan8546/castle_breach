@@ -376,10 +376,7 @@ const CP2 = (() => {
     // ─────────────────────────────────────────
     function successAnim() {
         if (typeof captureFlag === 'function') captureFlag(2);
-        if (typeof API !== 'undefined') {
-            API.validateFlag(GameState.teamId, 2, 'flag{correct_path}').catch(() => { });
-        }
-        
+
         if (typeof Audio !== 'undefined') setTimeout(() => Audio.play('portalWhoosh'), 1200);
 
         spawnParticles('fire', 50);

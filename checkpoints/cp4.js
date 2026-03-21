@@ -499,9 +499,6 @@ The flag is: flag{princess_rescued}`,
 
       // Record final flag + notify backend
       if (typeof captureFlag === 'function') captureFlag(4);
-      if (typeof API !== 'undefined' && typeof GameState !== 'undefined') {
-        API.validateFlag(GameState.teamId, 4, 'flag{princess_rescued}').catch(() => {});
-      }
 
       // End game after celebration
       setTimeout(() => {
