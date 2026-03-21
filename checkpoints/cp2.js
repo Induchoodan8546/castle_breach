@@ -9,7 +9,7 @@ const CP2 = (() => {
     const HALLS = {
         A: { label: 'PATH A', cipher: 'OLXA QL QEB ILPQ MXOXAFPB', decoded: 'ROAD TO THE LOST PARADISE', correct: false },
         B: { label: 'PATH B', cipher: 'WKH PLGGOH LV QRW DOZDBV VDIH', decoded: 'THE MIDDLE IS NOT ALWAYS SAFE', correct: false },
-        C: { label: 'PATH C', cipher: 'YBXQWV FP ZROPBA FK EBII', decoded: 'BEAUTY IS CURSED IN HELL', correct: true },
+        C: { label: 'PATH C', cipher: 'EHDXWB LV FXUVHG LQ KHOO', decoded: 'BEAUTY IS CURSED IN HELL', correct: true },
     };
 
     let locked = false;
