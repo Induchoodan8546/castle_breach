@@ -227,28 +227,7 @@ function buildStars() {
     }
 }
 
-function animateHiScore() {
-    const el = document.getElementById('hiScore');
-    if (!el) return;
-    let val = 0;
-    const target = 24680;
-    const t = setInterval(() => {
-        val = Math.min(val + Math.floor(Math.random() * 800 + 200), target);
-        el.textContent = String(val).padStart(5, '0');
-        if (val >= target) clearInterval(t);
-    }, 60);
-}
-
-function animatePlayerCount() {
-    const el = document.getElementById('playerCount');
-    if (!el) return;
-    let count = 0;
-    const t = setInterval(() => {
-        count = Math.min(count + 1, 12);
-        el.textContent = String(count).padStart(2, '0');
-        if (count >= 12) clearInterval(t);
-    }, 200);
-}
+// Removed animateHiScore and animatePlayerCount
 
 // ── Handle START button ────────────────────────
 function handleStart() {
@@ -352,8 +331,6 @@ document.addEventListener('DOMContentLoaded', () => {
     buildCastle();
     buildDivider();
     buildStars();
-    animateHiScore();
-    animatePlayerCount();
     setupRetry();
 
     const nameInput = document.getElementById('nameInput');
