@@ -64,14 +64,14 @@ const CP1 = (() => {
         <div class="cp1-wall-detail"></div>
 
         <div class="cp1-object cp1-torch" id="obj-torch1" data-obj="torch1" title="Examine">
-          <div class="torch-mount"></div><div class="torch-body"></div>
           <div class="torch-flame"><span class="flame f1"></span><span class="flame f2"></span><span class="flame f3"></span></div>
+          <div class="torch-body"></div><div class="torch-mount"></div>
           <div class="torch-glow"></div><div class="obj-label">TORCH</div>
         </div>
 
         <div class="cp1-object cp1-torch cp1-torch-right" id="obj-torch2" data-obj="torch2" title="Examine">
-          <div class="torch-mount"></div><div class="torch-body"></div>
           <div class="torch-flame"><span class="flame f1"></span><span class="flame f2"></span><span class="flame f3"></span></div>
+          <div class="torch-body"></div><div class="torch-mount"></div>
           <div class="torch-glow"></div><div class="obj-label">TORCH</div>
         </div>
 
