@@ -96,39 +96,16 @@ The flag is: flag{rsa_unlocked}`,
       title:    'THE BROKEN CIPHER',
       subtitle: 'Reverse Engineering',
       difficulty: '★★★★☆',
-      story:    'A mechanical cipher device sits on a pedestal. It has been tampered with — the encoding logic reversed. Reverse-engineer the algorithm to decode the message.',
-      puzzle:   `You find a coded message and a note describing the encoding steps:
+      story:    'Mr HOlmes and Dr Watson from BBC says a lot',
+      puzzle:   `You find a coded message and a note describing the encoding
 
-Encoded message: }galf{3ng1n33r_r3v
+Encoded message: eWR3bGZkcV9mZHBocnY=
 
-Encoding algorithm used (in order):
-  Step 1: Reverse the string
-  Step 2: Replace every 'e' with '3'
-  Step 3: Replace every 'i' with '1'
-  Step 4: Wrap with flag{} format
 
-To DECODE, reverse the steps in reverse order:
-  Step 4 (undo): Remove flag{} wrapper → 3ng1n33r_r3v
-  Wait — the full encoded string IS: }galf{3ng1n33r_r3v
-
-  Step 1 (undo wrap+reverse): Reverse the encoded string
-  }galf{3ng1n33r_r3v  →  v3r_r33n1gn3{flag}
-
-  Hmm — re-examine:
-  Original encoded: }galf{3ng1n33r_r3v
-  Reverse it:        v3r_r33n1gn3}flag{  ✗
-
-  Correct approach — the string was encoded then reversed:
-  Encoded string reversed: }galf{3ng1n33r_r3v
-  Reverse:  v3r_r33n1gn3{galf}
-
-  Undo leet (3→e, 1→i):  ver_reenigner{galf}
-  Reverse the flag wrap:  flag{reverse_eng}
-
-The flag is: flag{reverse_eng}`,
-      hint:     'Work backwards through the encoding steps. First reverse the string, then convert leet speak back (3→e, 1→i). The flag format will emerge.',
-      answer:   'flag{reverse_eng}',
-      flag:     'flag{reverse_eng}',
+`,
+      hint:     'ceaser shift his base 64 times before 3',
+      answer:   'flag{vatican_cameos}',
+      flag:     'flag{vatican_cameos}',
     },
 
     // ── Challenge 4: XOR Cipher ─────────────

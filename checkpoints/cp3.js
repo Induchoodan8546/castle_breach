@@ -9,7 +9,7 @@ const CP3 = (() => {
     // ── Puzzle data ────────────────────────────
     const MD5_HASH = '5f4dcc3b5aa765d61d8327deb882cf99';
     const ANSWER = 'password';
-    const CORRECT_FLAG = 'flag{monster_defeated}';
+    const CORRECT_FLAG = 'flag{password}';
 
     let flagSubmitted = false;
     let attempts = 0;
@@ -40,7 +40,7 @@ const CP3 = (() => {
             icon: '🐉',
             text: 'The dragon turns its burning eyes toward you. Around its neck hangs a cracked obsidian tablet. Carved into the tablet:',
             code: MD5_HASH,
-            hint: 'This is an MD5 hash. Crack it to discover the magic word that will defeat the dragon. Try a hash lookup tool or think — what is the world\'s most common password?',
+            hint: 'This is an MD5 hash. The Romans were fond of shifting messages',
             clue: true,
         },
     };
