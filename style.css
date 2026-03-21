@@ -103,15 +103,8 @@ body {
 }
 
 @keyframes twinkle {
-
-    0%,
-    100% {
-        opacity: 0
-    }
-
-    50% {
-        opacity: 0.8
-    }
+    0%, 100% { opacity: 0 }
+    50%       { opacity: 0.8 }
 }
 
 /* Ember glow from bottom */
@@ -154,9 +147,7 @@ body {
     image-rendering: pixelated;
 }
 
-.castle-row {
-    display: flex;
-}
+.castle-row { display: flex; }
 
 .px {
     width: 6px;
@@ -233,50 +224,19 @@ body {
     animation: dot-cycle 1.4s steps(1) infinite;
 }
 
-.pdot:nth-child(1) {
-    animation-delay: 0s
-}
-
-.pdot:nth-child(2) {
-    animation-delay: .17s
-}
-
-.pdot:nth-child(3) {
-    animation-delay: .35s
-}
-
-.pdot:nth-child(4) {
-    animation-delay: .52s
-}
-
-.pdot:nth-child(5) {
-    animation-delay: .7s
-}
-
-.pdot:nth-child(6) {
-    animation-delay: .87s
-}
-
-.pdot:nth-child(7) {
-    animation-delay: 1.05s
-}
-
-.pdot:nth-child(8) {
-    animation-delay: 1.22s
-}
+.pdot:nth-child(1) { animation-delay: 0s }
+.pdot:nth-child(2) { animation-delay: .17s }
+.pdot:nth-child(3) { animation-delay: .35s }
+.pdot:nth-child(4) { animation-delay: .52s }
+.pdot:nth-child(5) { animation-delay: .7s }
+.pdot:nth-child(6) { animation-delay: .87s }
+.pdot:nth-child(7) { animation-delay: 1.05s }
+.pdot:nth-child(8) { animation-delay: 1.22s }
 
 @keyframes dot-cycle {
-    0% {
-        background: var(--orange);
-    }
-
-    33% {
-        background: var(--orange-bright);
-    }
-
-    66% {
-        background: var(--yellow);
-    }
+    0%  { background: var(--orange); }
+    33% { background: var(--orange-bright); }
+    66% { background: var(--yellow); }
 }
 
 /* ── Pixel frame ── */
@@ -299,13 +259,8 @@ body {
     text-shadow: 0 0 8px var(--orange);
 }
 
-.pixel-frame::before {
-    left: -2px;
-}
-
-.pixel-frame::after {
-    right: -2px;
-}
+.pixel-frame::before { left: -2px; }
+.pixel-frame::after  { right: -2px; }
 
 /* ── Input section ── */
 .input-section {
@@ -396,9 +351,7 @@ body {
     animation: blink 0.5s step-end infinite;
 }
 
-.error-msg.show {
-    display: block;
-}
+.error-msg.show { display: block; }
 
 /* ── Load bar ── */
 .load-bar-wrap {
@@ -410,9 +363,7 @@ body {
     overflow: hidden;
 }
 
-.load-bar-wrap.show {
-    display: block;
-}
+.load-bar-wrap.show { display: block; }
 
 .load-bar-inner {
     height: 100%;
@@ -522,6 +473,28 @@ body {
     animation: blink 0.5s step-end infinite;
 }
 
+/* ── Audio mute button in HUD ── */
+.hud-mute-btn {
+    background: none;
+    border: 1px solid rgba(255, 80, 0, 0.35);
+    color: #ff6600;
+    font-size: 14px;
+    width: 28px;
+    height: 22px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hud-mute-btn:hover {
+    border-color: var(--orange);
+    background: rgba(255, 68, 0, 0.15);
+}
+
 /* ═══════════════════════════════════════════════
    GAME SCENE
 ════════════════════════════════════════════════ */
@@ -619,67 +592,31 @@ body {
    SHARED ANIMATIONS
 ════════════════════════════════════════════════ */
 @keyframes blink {
-
-    0%,
-    100% {
-        opacity: 1
-    }
-
-    50% {
-        opacity: 0
-    }
+    0%, 100% { opacity: 1 }
+    50%       { opacity: 0 }
 }
 
 @keyframes flicker {
-
-    0%,
-    93%,
-    100% {
-        opacity: 1
-    }
-
-    94% {
-        opacity: 0.8
-    }
-
-    96% {
-        opacity: 0.55
-    }
-
-    98% {
-        opacity: 1
-    }
+    0%, 93%, 100% { opacity: 1 }
+    94%            { opacity: 0.8 }
+    96%            { opacity: 0.55 }
+    98%            { opacity: 1 }
 }
 
 @keyframes pulse-orange {
-
-    0%,
-    100% {
-        text-shadow: 0 0 8px #ff6600, 0 0 20px #cc4400;
-    }
-
-    50% {
-        text-shadow: 0 0 18px #ff8800, 0 0 40px #ff4400, 0 0 60px #cc2200;
-    }
+    0%, 100% { text-shadow: 0 0 8px #ff6600, 0 0 20px #cc4400; }
+    50%       { text-shadow: 0 0 18px #ff8800, 0 0 40px #ff4400, 0 0 60px #cc2200; }
 }
 
 @keyframes btn-pulse {
-
-    0%,
-    100% {
-        box-shadow: 4px 4px 0 var(--orange-dark), 0 0 22px var(--orange-glow);
-    }
-
-    50% {
-        box-shadow: 4px 4px 0 var(--orange-dark), 0 0 40px rgba(255, 80, 0, 0.7);
-    }
+    0%, 100% { box-shadow: 4px 4px 0 var(--orange-dark), 0 0 22px var(--orange-glow); }
+    50%       { box-shadow: 4px 4px 0 var(--orange-dark), 0 0 40px rgba(255, 80, 0, 0.7); }
 }
 
 /* ═══════════════════════════════════════════════
    CP2 — HALL OF PATHS (PRO LEVEL)
 ════════════════════════════════════════════════ */
 
-/* ── Scene ── */
 .cp2-scene {
     position: relative;
     width: 100%;
@@ -689,7 +626,6 @@ body {
         radial-gradient(circle at center, #1a0800 0%, #0d0500 60%, #000 100%);
 }
 
-/* Background texture */
 .cp2-bg {
     position: absolute;
     inset: 0;
@@ -702,7 +638,6 @@ body {
             transparent 40px);
 }
 
-/* Floor */
 .cp2-floor {
     position: absolute;
     bottom: 0;
@@ -712,7 +647,6 @@ body {
     z-index: 2;
 }
 
-/* Title */
 .cp2-title {
     position: absolute;
     top: 20px;
@@ -725,7 +659,6 @@ body {
     animation: flicker 3s infinite;
 }
 
-/* ── Hallways Container (3D perspective) ── */
 .hallways {
     position: absolute;
     bottom: 140px;
@@ -737,7 +670,6 @@ body {
     z-index: 5;
 }
 
-/* ── Individual Hall ── */
 .hall {
     width: 130px;
     height: 230px;
@@ -749,7 +681,6 @@ body {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0, 0, 0, 0.9);
 }
 
-/* Frame */
 .hall::before {
     content: "";
     position: absolute;
@@ -758,7 +689,6 @@ body {
     pointer-events: none;
 }
 
-/* Depth illusion — flat, no translateZ */
 .hall::after {
     content: "";
     position: absolute;
@@ -767,26 +697,15 @@ body {
     pointer-events: none;
 }
 
-/* Hover */
 .hall:hover {
     transform: scale(1.08);
     box-shadow: 0 0 35px var(--orange), inset 0 0 40px rgba(0, 0, 0, 0.9);
 }
 
-/* Visual hint for puzzle */
-.hall-a {
-    background: rgba(255, 100, 0, 0.45);
-}
+.hall-a { background: rgba(255, 100, 0, 0.45); }
+.hall-b { background: rgba(200, 80, 0, 0.35); }
+.hall-c { background: rgba(0, 0, 0, 0.95); }
 
-.hall-b {
-    background: rgba(200, 80, 0, 0.35);
-}
-
-.hall-c {
-    background: rgba(0, 0, 0, 0.95);
-}
-
-/* Codes — selectable & copyable */
 .code {
     position: absolute;
     top: -50px;
@@ -802,7 +721,6 @@ body {
     z-index: 6;
 }
 
-/* ENTER button on each hall */
 .hall-enter-btn {
     position: absolute;
     bottom: 36px;
@@ -835,7 +753,6 @@ body {
     box-shadow: 1px 1px 0 var(--orange-dark);
 }
 
-/* Inscription / subtitle */
 .inscription,
 .cp2-subtitle {
     position: absolute;
@@ -850,7 +767,6 @@ body {
     text-shadow: 0 0 8px var(--orange);
 }
 
-/* Cipher text displayed inside each hallway — selectable */
 .cp2-hall-cipher {
     position: absolute;
     top: 12px;
@@ -869,7 +785,6 @@ body {
     word-break: break-all;
 }
 
-/* ── Torches ── */
 .torch {
     position: absolute;
     width: 20px;
@@ -879,13 +794,8 @@ body {
     z-index: 6;
 }
 
-.torch.left {
-    left: 20px;
-}
-
-.torch.right {
-    right: 20px;
-}
+.torch.left  { left: 20px; }
+.torch.right { right: 20px; }
 
 .torch::after {
     content: '';
@@ -900,18 +810,10 @@ body {
 }
 
 @keyframes cp2-flicker {
-    from {
-        opacity: 0.6;
-        transform: scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1.1);
-    }
+    from { opacity: 0.6; transform: scale(0.9); }
+    to   { opacity: 1;   transform: scale(1.1); }
 }
 
-/* ── Skulls ── */
 .skull {
     position: absolute;
     width: 26px;
@@ -923,15 +825,9 @@ body {
     box-shadow: inset 0 0 6px #000;
 }
 
-.skull-left {
-    left: 120px;
-}
+.skull-left  { left: 120px; }
+.skull-right { right: 120px; }
 
-.skull-right {
-    right: 120px;
-}
-
-/* ── Particles ── */
 #particles {
     position: absolute;
     inset: 0;
@@ -948,15 +844,8 @@ body {
 }
 
 @keyframes dustMove {
-    from {
-        transform: translateY(0);
-        opacity: 0.5;
-    }
-
-    to {
-        transform: translateY(-120px);
-        opacity: 0;
-    }
+    from { transform: translateY(0);     opacity: 0.5; }
+    to   { transform: translateY(-120px); opacity: 0; }
 }
 
 .particle.fire {
@@ -968,33 +857,18 @@ body {
 }
 
 @keyframes fireMove {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-80px);
-        opacity: 0;
-    }
+    from { transform: translateY(0); }
+    to   { transform: translateY(-80px); opacity: 0; }
 }
 
-/* ── FAIL ANIMATION ── */
 .collapse {
     animation: collapse 0.3s infinite;
 }
 
 @keyframes collapse {
-    0% {
-        transform: translate(0, 0);
-    }
-
-    50% {
-        transform: translate(6px, -6px);
-    }
-
-    100% {
-        transform: translate(-6px, 6px);
-    }
+    0%   { transform: translate(0, 0); }
+    50%  { transform: translate(6px, -6px); }
+    100% { transform: translate(-6px, 6px); }
 }
 
 .blackout {
@@ -1002,16 +876,12 @@ body {
     transition: 0.6s;
 }
 
-/* ── SUCCESS ── */
 .enter {
     animation: enterHall 1.5s forwards;
 }
 
 @keyframes enterHall {
-    to {
-        transform: scale(6);
-        opacity: 0;
-    }
+    to { transform: scale(6); opacity: 0; }
 }
 
 .fadeout {
@@ -1019,7 +889,6 @@ body {
     transition: 1s;
 }
 
-/* Transition overlay */
 .cp2-transition {
     position: absolute;
     inset: 0;
@@ -1055,7 +924,6 @@ body {
     margin-top: 12px;
 }
 
-/* ── Hall labels ── */
 .hall-label {
     position: absolute;
     bottom: 12px;
@@ -1069,7 +937,6 @@ body {
     z-index: 5;
 }
 
-/* ── Hall selected glow ── */
 .hall-selected {
     box-shadow: 0 0 50px var(--orange), 0 0 100px rgba(255, 120, 0, 0.6) !important;
     border-color: var(--yellow) !important;
@@ -1080,14 +947,13 @@ body {
     box-shadow: inset 0 0 40px rgba(255, 200, 0, 0.3) !important;
 }
 
-/* Fade other halls during entry */
 .hallways.hall-entering .hall:not(.enter) {
     opacity: 0;
     transition: opacity 0.6s;
 }
 
 /* ═══════════════════════════════════════════════
-   CP2 — SUBMIT MODAL (centered)
+   CP2 — SUBMIT MODAL
 ════════════════════════════════════════════════ */
 .cp2-submit-modal {
     position: absolute;
@@ -1164,10 +1030,7 @@ body {
     text-align: center;
 }
 
-.cp2-submit-row {
-    display: flex;
-    gap: 8px;
-}
+.cp2-submit-row { display: flex; gap: 8px; }
 
 .cp2-submit-input {
     flex: 1;
@@ -1193,19 +1056,9 @@ body {
 }
 
 @keyframes input-shake {
-
-    0%,
-    100% {
-        transform: translateX(0)
-    }
-
-    20% {
-        transform: translateX(-6px)
-    }
-
-    60% {
-        transform: translateX(6px)
-    }
+    0%, 100% { transform: translateX(0) }
+    20%       { transform: translateX(-6px) }
+    60%       { transform: translateX(6px) }
 }
 
 .cp2-submit-feedback {
@@ -1228,7 +1081,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
-   CP2 — RED FLASH OVERLAY (fail effect)
+   CP2 — RED FLASH OVERLAY
 ════════════════════════════════════════════════ */
 .cp2-red-flash {
     position: absolute;
@@ -1245,13 +1098,6 @@ body {
 }
 
 @keyframes red-pulse {
-
-    0%,
-    100% {
-        opacity: 0.8;
-    }
-
-    50% {
-        opacity: 0.3;
-    }
+    0%, 100% { opacity: 0.8; }
+    50%       { opacity: 0.3; }
 }

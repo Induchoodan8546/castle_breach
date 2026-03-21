@@ -304,6 +304,7 @@ const CP3 = (() => {
     function openModal(key) {
         const data = objectData[key];
         if (!data) return;
+        if (typeof Audio !== 'undefined') Audio.play('objectClick');
 
         document.getElementById('cp3ModalIcon').textContent = data.icon || '👁';
         document.getElementById('cp3ModalTitle').textContent = data.title;
@@ -344,6 +345,7 @@ const CP3 = (() => {
             flagSubmitted = true;
             clearInterval(monsterIdle);
 
+            if (typeof Audio !== 'undefined') Audio.play('flagCaptured');
             feedback.textContent = '✅ SPELL CAST! DRAGON DEFEATED!';
             feedback.className = 'cp3-flag-feedback success';
             input.disabled = true;
@@ -360,6 +362,7 @@ const CP3 = (() => {
             }, 1000);
 
         } else {
+            if (typeof Audio !== 'undefined') Audio.play('dragonRoar');
             feedback.textContent = '❌ THE DRAGON LAUGHS AT YOU. TRY AGAIN.';
             feedback.className = 'cp3-flag-feedback error';
             input.value = '';
@@ -377,6 +380,8 @@ const CP3 = (() => {
 
     // ── Dragon explosion animation ─────────────
     function explodeDragon() {
+        if (typeof Audio !== 'undefined') Audio.play('dragonExplosion');
+        
         const dragon = document.getElementById('dragonWrap');
         const explosion = document.getElementById('dragonExplosion');
         const fire = document.getElementById('dragonFire');
@@ -391,6 +396,7 @@ const CP3 = (() => {
 
         setTimeout(() => {
             if (victory) victory.classList.add('visible');
+            if (typeof Audio !== 'undefined') setTimeout(() => Audio.play('portalWhoosh'), 1800);
         }, 1000);
 
         setTimeout(() => {

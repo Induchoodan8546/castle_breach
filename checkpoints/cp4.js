@@ -404,6 +404,7 @@ The flag is: flag{princess_rescued}`,
     const ch = CHALLENGES.find(c => c.id === id);
     if (!ch) return;
     activeChallenge = id;
+    if (typeof Audio !== 'undefined') Audio.play('objectClick');
 
     document.getElementById('cp4MIcon').textContent  = ch.icon;
     document.getElementById('cp4MTitle').textContent = ch.title;
@@ -448,6 +449,7 @@ The flag is: flag{princess_rescued}`,
     if (answer === ch.answer) {
       // ── CORRECT ──
       solved[activeChallenge] = true;
+      if (typeof Audio !== 'undefined') { Audio.play('lockClick'); setTimeout(() => Audio.play('flagCaptured'), 800); }
       feedback.textContent    = '✅ CHALLENGE SOLVED! SEAL BROKEN!';
       feedback.className      = 'cp4-feedback solved';
       input.disabled          = true;
@@ -472,6 +474,7 @@ The flag is: flag{princess_rescued}`,
 
     } else {
       // ── WRONG ──
+      if (typeof Audio !== 'undefined') Audio.play('wrongAnswer');
       feedback.textContent = '❌ WRONG FLAG. TRY AGAIN. NO PENALTY.';
       feedback.className   = 'cp4-feedback error';
       input.value          = '';
@@ -491,6 +494,7 @@ The flag is: flag{princess_rescued}`,
 
   // ── Victory sequence ───────────────────────
   function triggerVictory() {
+    if (typeof Audio !== 'undefined') Audio.play('cellDoorCreak');
     // Step 1: Open the cell door first
     const door = document.getElementById('cp4Door');
     if (door) door.classList.add('opening');
@@ -503,6 +507,7 @@ The flag is: flag{princess_rescued}`,
 
     // Step 3: Show victory overlay after princess walks out
     setTimeout(() => {
+      if (typeof Audio !== 'undefined') Audio.play('princessRescued');
       const victory = document.getElementById('cp4Victory');
       if (victory) {
         // Show time
@@ -635,7 +640,7 @@ The flag is: flag{princess_rescued}`,
       display:flex; align-items:stretch;
       border-left:4px solid #5a2e00;
       border-right:4px solid #5a2e00;
-      overflow:hidden; position:relative;
+      overflow:visible; position:relative;
     }
     .cp4-bar {
       flex:1; background:linear-gradient(180deg,#5a2e00,#2e1500);

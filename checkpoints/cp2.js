@@ -275,6 +275,7 @@ const CP2 = (() => {
     // ─────────────────────────────────────────
     function _open(choice) {
         if (locked) return;
+        if (typeof Audio !== 'undefined') Audio.play('objectClick');
         activeChoice = choice;
         const hall = HALLS[choice];
         document.getElementById('_cp2ModalTitle').textContent = '🚪 ' + hall.label;
@@ -308,16 +309,19 @@ const CP2 = (() => {
         if (answer === hall.decoded) {
             if (hall.correct) {
                 locked = true;
+                if (typeof Audio !== 'undefined') Audio.play('flagCaptured');
                 feedback.textContent = '✅ CORRECT! PATH UNLOCKED!';
                 feedback.style.color = '#00ff88';
                 setTimeout(() => { _close(); successAnim(); }, 900);
             } else {
                 locked = true;
+                if (typeof Audio !== 'undefined') Audio.play('wrongAnswer');
                 feedback.textContent = '💀 THIS PATH IS A TRAP!';
                 feedback.style.color = '#ff2200';
                 setTimeout(() => { _close(); failAnim(); }, 1000);
             }
         } else {
+            if (typeof Audio !== 'undefined') Audio.play('wrongAnswer');
             feedback.textContent = '❌ WRONG DECODE. TRY AGAIN.';
             feedback.style.color = '#ff2200';
             input.value = '';
@@ -375,6 +379,8 @@ const CP2 = (() => {
         if (typeof API !== 'undefined') {
             API.validateFlag(GameState.teamId, 2, 'flag{correct_path}').catch(() => { });
         }
+        
+        if (typeof Audio !== 'undefined') setTimeout(() => Audio.play('portalWhoosh'), 1200);
 
         spawnParticles('fire', 50);
 
