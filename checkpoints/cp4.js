@@ -252,31 +252,35 @@ The flag is: flag{princess_rescued}`,
         <!-- PRISON CELL — center -->
         <div class="cp4-cell" id="cp4Cell">
           <div class="cp4-cell-top"></div>
-          <!-- Cell bars — princess lives INSIDE here -->
-          <div class="cp4-bars">
-            <!-- Princess behind bars -->
-            <div class="cp4-princess" id="cp4Princess">
-              <img class="princess-img" src="assets/icons/princess_large.png?v=3" alt="Princess Lyra" draggable="false"/>
-            </div>
-            <!-- Bars painted on top -->
-            <div class="cp4-bar"></div>
-            <div class="cp4-bar"></div>
-            <div class="cp4-bar"></div>
-            <div class="cp4-bar"></div>
-            <div class="cp4-bar"></div>
+          
+          <!-- Princess inside cell, back layer -->
+          <div class="cp4-princess" id="cp4Princess">
+            <img class="princess-img" src="assets/icons/princess_large.png?v=3" alt="Princess Lyra" draggable="false"/>
           </div>
-          <!-- Cell door with 5 locks -->
+
+          <!-- Entire Door swings open -->
           <div class="cp4-cell-door" id="cp4Door">
-            <div class="cp4-locks" id="cp4Locks">
-              ${CHALLENGES.map(c => `
-                <div class="cp4-lock" id="lock-${c.id}" data-id="${c.id}">
-                  <div class="lock-body">
-                    <div class="lock-shackle"></div>
-                    <div class="lock-icon">${c.icon}</div>
+            <!-- Bars painted on top -->
+            <div class="cp4-bars">
+              <div class="cp4-bar"></div>
+              <div class="cp4-bar"></div>
+              <div class="cp4-bar"></div>
+              <div class="cp4-bar"></div>
+              <div class="cp4-bar"></div>
+            </div>
+            <!-- Locks panel at bottom -->
+            <div class="cp4-locks-panel">
+              <div class="cp4-locks" id="cp4Locks">
+                ${CHALLENGES.map(c => `
+                  <div class="cp4-lock" id="lock-${c.id}" data-id="${c.id}">
+                    <div class="lock-body">
+                      <div class="lock-shackle"></div>
+                      <div class="lock-icon">${c.icon}</div>
+                    </div>
+                    <div class="lock-label">${c.number}</div>
                   </div>
-                  <div class="lock-label">${c.number}</div>
-                </div>
-              `).join('')}
+                `).join('')}
+              </div>
             </div>
           </div>
         </div>
@@ -602,39 +606,26 @@ The flag is: flag{princess_rescued}`,
       transform:translateX(-50%);
       width:160px; z-index:8;
       display:flex; flex-direction:column; align-items:center;
+      background:rgba(0,0,0,0.65); /* Dark interior */
+      border-left:4px solid #5a2e00;
+      border-right:4px solid #5a2e00;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.9);
     }
     .cp4-cell-top {
       width:170px; height:18px;
       background:linear-gradient(180deg,#3d1e00,#2e1500);
       border:2px solid #6a3800; border-bottom:none;
+      position:relative; z-index:10;
     }
-    .cp4-bars {
-      width:160px; height:220px;
-      background:rgba(0,0,0,0.55);
-      display:flex; align-items:stretch;
-      border-left:4px solid #5a2e00;
-      border-right:4px solid #5a2e00;
-      overflow:visible; position:relative;
-    }
-    .cp4-bar {
-      flex:1; background:linear-gradient(180deg,#5a2e00,#2e1500);
-      margin:0 3px; min-width:7px; opacity:0.85;
-      position:relative; z-index:2;
-    }
-
-    /* Princess inside cell — behind bars */
     .cp4-princess {
-      position:absolute; bottom:0; left:50%;
+      position:absolute; bottom:40px; left:50%;
       transform:translateX(-50%);
       display:flex; flex-direction:column; align-items:center;
-      z-index:1; transition:transform 1.8s cubic-bezier(0.25,0.46,0.45,0.94);
-      pointer-events:none;
-      width:100%;
+      z-index:2; transition:transform 1.8s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events:none; width:100%;
     }
     .princess-img {
-      width:130px;
-      height:auto;
-      image-rendering:pixelated;
+      width:130px; height:auto; image-rendering:pixelated;
       filter: drop-shadow(0 0 10px rgba(255,100,200,0.7)) drop-shadow(0 0 20px rgba(180,0,255,0.4));
       animation:princess-glow 2s ease-in-out infinite alternate;
     }
@@ -643,24 +634,39 @@ The flag is: flag{princess_rescued}`,
       100%{filter:drop-shadow(0 0 18px rgba(255,160,230,0.95)) drop-shadow(0 0 30px rgba(200,0,255,0.6));}
     }
     .cp4-princess.rescued {
-      transform:translateX(calc(-50% + 180px)) translateY(-30px);
+      transform:translateX(calc(-50% + 180px)) translateY(-20px);
       animation:princess-walk 0.6s steps(2) infinite;
+      z-index: 20; /* Go in front when out */
     }
     @keyframes princess-walk{
-      0%{transform:translateX(calc(-50% + 178px)) translateY(-28px)}
-      100%{transform:translateX(calc(-50% + 182px)) translateY(-32px)}
+      0%{transform:translateX(calc(-50% + 178px)) translateY(-18px)}
+      100%{transform:translateX(calc(-50% + 182px)) translateY(-22px)}
     }
 
-    /* Cell door */
+    /* Entire Cell door that swings */
     .cp4-cell-door {
-      width:160px; padding:8px 6px;
-      background:linear-gradient(180deg,#1a0800,#0d0500);
-      border:2px solid #3d1e00; border-top:none;
-      transition:transform 1.5s ease-in-out;
+      width:100%; display:flex; flex-direction:column;
+      transition:transform 2s cubic-bezier(0.25,0.1,0.25,1);
       transform-origin:left center;
+      z-index: 5;
     }
     .cp4-cell-door.opening {
-      transform:perspective(400px) rotateY(-85deg);
+      transform:perspective(600px) rotateY(-95deg);
+    }
+    .cp4-bars {
+      width:100%; height:220px;
+      display:flex; align-items:stretch;
+      border-bottom:2px solid #2e1500;
+    }
+    .cp4-bar {
+      flex:1; background:linear-gradient(180deg,#5a2e00,#2e1500);
+      margin:0 3px; min-width:7px; opacity:0.95;
+      box-shadow:inset -2px 0 4px rgba(0,0,0,0.5);
+    }
+    .cp4-locks-panel {
+      padding:8px 6px;
+      background:linear-gradient(180deg,#1a0800,#0d0500);
+      border-top:2px solid #3d1e00;
     }
 
     /* Locks */
