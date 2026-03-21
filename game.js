@@ -66,6 +66,12 @@ function formatTime(seconds) {
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
+function getCpDuration(num) {
+    if (!GameState.checkpointTimes[num]) return null;
+    if (num === 1) return GameState.checkpointTimes[1];
+    return Math.max(0, GameState.checkpointTimes[num] - GameState.checkpointTimes[num-1]);
+}
+
 // ── Flag capture ───────────────────────────────
 function captureFlag(checkpointNum) {
     GameState.flagsCaptured++;
@@ -81,6 +87,13 @@ function gameOver() {
     document.getElementById('goPlayer').textContent = GameState.playerName;
     document.getElementById('goFlags').textContent = `${GameState.flagsCaptured} / ${GameState.totalFlags}`;
     document.getElementById('goTime').textContent = formatTime(30 * 60 - GameState.timerSeconds);
+
+    for (let i = 1; i <= 4; i++) {
+        const dur = getCpDuration(i);
+        const el = document.getElementById(`goCp${i}`);
+        if (el) el.textContent = dur !== null ? formatTime(dur) : '---';
+    }
+
     switchScene('gameover');
 }
 
@@ -90,6 +103,13 @@ function gameWin() {
     document.getElementById('goPlayer').textContent = GameState.playerName;
     document.getElementById('goFlags').textContent = '4 / 4';
     document.getElementById('goTime').textContent = formatTime(getElapsed());
+
+    for (let i = 1; i <= 4; i++) {
+        const dur = getCpDuration(i);
+        const el = document.getElementById(`goCp${i}`);
+        if (el) el.textContent = dur !== null ? formatTime(dur) : '---';
+    }
+
     switchScene('gameover');
 }
 
