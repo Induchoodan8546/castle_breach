@@ -275,20 +275,18 @@ The flag is: flag{princess_rescued}`,
         <!-- PRISON CELL — center -->
         <div class="cp4-cell" id="cp4Cell">
           <div class="cp4-cell-top"></div>
-          <!-- Cell bars -->
+          <!-- Cell bars — princess lives INSIDE here -->
           <div class="cp4-bars">
+            <!-- Princess behind bars -->
+            <div class="cp4-princess" id="cp4Princess">
+              <img class="princess-img" src="assets/icons/princess_large.png?v=3" alt="Princess Lyra" draggable="false"/>
+            </div>
+            <!-- Bars painted on top -->
             <div class="cp4-bar"></div>
             <div class="cp4-bar"></div>
             <div class="cp4-bar"></div>
             <div class="cp4-bar"></div>
             <div class="cp4-bar"></div>
-          </div>
-          <!-- Princess inside cell -->
-          <div class="cp4-princess" id="cp4Princess">
-            <div class="princess-crown">♛</div>
-            <div class="princess-head"></div>
-            <div class="princess-body"></div>
-            <div class="princess-wave">👋</div>
           </div>
           <!-- Cell door with 5 locks -->
           <div class="cp4-cell-door" id="cp4Door">
@@ -306,9 +304,9 @@ The flag is: flag{princess_rescued}`,
           </div>
         </div>
 
-        <!-- CHALLENGE PANELS — 5 panels across bottom -->
+        <!-- CHALLENGE PANELS — scattered in two rows -->
         <div class="cp4-panels" id="cp4Panels">
-          ${CHALLENGES.map(c => `
+          ${CHALLENGES.map((c, i) => `
             <div class="cp4-panel ${solved[c.id] ? 'solved' : ''}" id="panel-${c.id}" data-id="${c.id}">
               <div class="panel-icon">${c.icon}</div>
               <div class="panel-num">CH ${c.number}</div>
@@ -493,15 +491,17 @@ The flag is: flag{princess_rescued}`,
 
   // ── Victory sequence ───────────────────────
   function triggerVictory() {
-    // Open the cell door
+    // Step 1: Open the cell door first
     const door = document.getElementById('cp4Door');
     if (door) door.classList.add('opening');
 
-    // Princess walks out
-    const princess = document.getElementById('cp4Princess');
-    if (princess) princess.classList.add('rescued');
+    // Step 2: After door opens (1.5s), princess walks out
+    setTimeout(() => {
+      const princess = document.getElementById('cp4Princess');
+      if (princess) princess.classList.add('rescued');
+    }, 1500);
 
-    // Show victory overlay
+    // Step 3: Show victory overlay after princess walks out
     setTimeout(() => {
       const victory = document.getElementById('cp4Victory');
       if (victory) {
@@ -526,7 +526,7 @@ The flag is: flag{princess_rescued}`,
         if (typeof gameWin === 'function') gameWin();
       }, 6000);
 
-    }, 1800);
+    }, 3200);
   }
 
   // ── Public load ────────────────────────────
@@ -619,67 +619,62 @@ The flag is: flag{princess_rescued}`,
 
     /* ── PRISON CELL ── */
     .cp4-cell {
-      position:absolute; top:14%; left:50%;
+      position:absolute; top:10%; left:50%;
       transform:translateX(-50%);
-      width:140px; z-index:8;
+      width:160px; z-index:8;
       display:flex; flex-direction:column; align-items:center;
     }
     .cp4-cell-top {
-      width:150px; height:16px;
+      width:170px; height:18px;
       background:linear-gradient(180deg,#3d1e00,#2e1500);
       border:2px solid #6a3800; border-bottom:none;
     }
     .cp4-bars {
-      width:140px; height:100px;
-      background:rgba(0,0,0,0.6);
+      width:160px; height:220px;
+      background:rgba(0,0,0,0.55);
       display:flex; align-items:stretch;
-      border-left:3px solid #3d1e00;
-      border-right:3px solid #3d1e00;
+      border-left:4px solid #5a2e00;
+      border-right:4px solid #5a2e00;
       overflow:hidden; position:relative;
     }
     .cp4-bar {
-      flex:1; background:linear-gradient(180deg,#4e2800,#2e1500);
-      margin:0 2px; min-width:6px;
+      flex:1; background:linear-gradient(180deg,#5a2e00,#2e1500);
+      margin:0 3px; min-width:7px; opacity:0.85;
+      position:relative; z-index:2;
     }
 
-    /* Princess inside cell */
+    /* Princess inside cell — behind bars */
     .cp4-princess {
-      position:absolute; top:8px; left:50%;
+      position:absolute; bottom:0; left:50%;
       transform:translateX(-50%);
-      display:flex; flex-direction:column; align-items:center; gap:2px;
-      z-index:9; transition:transform 1.5s ease-in-out;
+      display:flex; flex-direction:column; align-items:center;
+      z-index:1; transition:transform 1.8s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events:none;
+      width:100%;
+    }
+    .princess-img {
+      width:130px;
+      height:auto;
+      image-rendering:pixelated;
+      filter: drop-shadow(0 0 10px rgba(255,100,200,0.7)) drop-shadow(0 0 20px rgba(180,0,255,0.4));
+      animation:princess-glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes princess-glow{
+      0%{filter:drop-shadow(0 0 8px rgba(255,100,200,0.5)) drop-shadow(0 0 14px rgba(180,0,255,0.3));}
+      100%{filter:drop-shadow(0 0 18px rgba(255,160,230,0.95)) drop-shadow(0 0 30px rgba(200,0,255,0.6));}
     }
     .cp4-princess.rescued {
-      transform:translateX(120px) translateY(20px);
-      animation:princess-dance 0.5s steps(2) infinite;
+      transform:translateX(calc(-50% + 180px)) translateY(-30px);
+      animation:princess-walk 0.6s steps(2) infinite;
     }
-    @keyframes princess-dance{0%{transform:translateX(120px) translateY(18px)}100%{transform:translateX(120px) translateY(22px)}}
-    .princess-crown {
-      font-size:16px; color:#ffcc00;
-      text-shadow:0 0 8px #ffaa00;
-      animation:crown-glow 1.5s ease-in-out infinite alternate;
+    @keyframes princess-walk{
+      0%{transform:translateX(calc(-50% + 178px)) translateY(-28px)}
+      100%{transform:translateX(calc(-50% + 182px)) translateY(-32px)}
     }
-    @keyframes crown-glow{0%{text-shadow:0 0 6px #ffaa00}100%{text-shadow:0 0 16px #ffcc00}}
-    .princess-head {
-      width:18px; height:18px; border-radius:50%;
-      background:radial-gradient(circle at 40% 35%,#ffcc99,#cc8855);
-      border:1px solid #aa6633;
-    }
-    .princess-body {
-      width:22px; height:28px;
-      background:linear-gradient(180deg,#cc44aa,#881188);
-      border:1px solid #ff66cc;
-      clip-path:polygon(20% 0%,80% 0%,100% 100%,0% 100%);
-    }
-    .princess-wave {
-      font-size:11px; position:absolute; right:-16px; top:14px;
-      animation:wave 0.8s ease-in-out infinite alternate;
-    }
-    @keyframes wave{0%{transform:rotate(-20deg)}100%{transform:rotate(20deg)}}
 
     /* Cell door */
     .cp4-cell-door {
-      width:140px; padding:8px 6px;
+      width:160px; padding:8px 6px;
       background:linear-gradient(180deg,#1a0800,#0d0500);
       border:2px solid #3d1e00; border-top:none;
       transition:transform 1.5s ease-in-out;
@@ -746,22 +741,38 @@ The flag is: flag{princess_rescued}`,
     }
 
     /* ── CHALLENGE PANELS ── */
+    /* ── CHALLENGE PANELS — scattered layout ── */
     .cp4-panels {
-      position:absolute; bottom:52px; left:0; right:0;
-      z-index:10; display:flex; justify-content:center;
-      gap:6px; padding:0 8px;
+      position:absolute; inset:0; z-index:10;
+      pointer-events:none;
     }
+    /* Position each panel individually */
     .cp4-panel {
-      flex:1; max-width:110px;
+      position:absolute;
+      width:130px;
       background:linear-gradient(135deg,#1a0030,#0d0020);
       border:2px solid #ff4400; cursor:pointer;
-      padding:8px 4px; display:flex; flex-direction:column;
-      align-items:center; gap:3px;
+      padding:10px 8px; display:flex; flex-direction:column;
+      align-items:center; gap:4px;
       transition:all 0.2s; box-shadow:0 0 8px rgba(255,68,0,0.2);
+      pointer-events:all;
     }
+    /* Panel 1 — left side top */
+    #panel-steg { left:2%; top:18%; }
+    /* Panel 2 — left side bottom */
+    #panel-rsa  { left:2%; top:52%; }
+    /* Panel 3 — bottom center */
+    #panel-rev  { left:50%; transform:translateX(-50%); bottom:60px; }
+    /* Panel 4 — right side top */
+    #panel-xor  { right:2%; top:18%; }
+    /* Panel 5 — right side bottom */
+    #panel-jwt  { right:2%; top:52%; }
     .cp4-panel:hover {
-      border-color:#ff8800; transform:translateY(-3px);
-      box-shadow:0 0 16px rgba(255,120,0,0.4);
+      border-color:#ff8800; transform:translateY(-3px) scale(1.03);
+      box-shadow:0 0 18px rgba(255,120,0,0.5);
+    }
+    #panel-rev:hover {
+      transform:translateX(-50%) translateY(-3px) scale(1.03);
     }
     .cp4-panel.solved {
       border-color:#00ff88; background:linear-gradient(135deg,#003322,#001a11);
