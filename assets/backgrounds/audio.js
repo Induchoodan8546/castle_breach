@@ -98,7 +98,7 @@ const Audio = (() => {
     if (!ctx || !enabled) return;
     resume();
     const t = ctx.currentTime;
-    osc('square', 440 + Math.random() * 120, t, 0.04, 0.08);
+    osc('square', 440 + Math.random() * 120, t, 0.04, 0.15); // increased gain from 0.08 to 0.15
   }
 
   // Button click — low thud + confirm beep
@@ -111,6 +111,16 @@ const Audio = (() => {
     // Confirm beep
     osc('square', 660, t + 0.05, 0.1, 0.15);
     osc('square', 880, t + 0.15, 0.12, 0.12);
+  }
+
+  // Registration success
+  function registerSuccess() {
+    if (!ctx || !enabled) return;
+    resume();
+    const t = ctx.currentTime;
+    osc('square', 440, t, 0.1, 0.15);
+    osc('square', 554, t + 0.1, 0.1, 0.15);
+    osc('square', 659, t + 0.2, 0.3, 0.2);
   }
 
   // ═══════════════════════════════════════════
@@ -229,6 +239,18 @@ const Audio = (() => {
     noise(t, 0.8, 0.35, 600);
     // High screech
     oscRamp('sawtooth', 800, 200, t + 0.3, 0.5, 0.2);
+  }
+
+  // Dragon fire breath (thud + whoosh)
+  function fireBreath() {
+    if (!ctx || !enabled) return;
+    resume();
+    const t = ctx.currentTime;
+    // Low thud
+    oscRamp('sine', 160, 40, t, 0.25, 0.6);
+    // Fire whoosh
+    noise(t, 0.8, 0.4, 1200);
+    noise(t + 0.1, 0.6, 0.2, 600);
   }
 
   // Dragon explosion boom — CP3 defeated
@@ -456,6 +478,7 @@ const Audio = (() => {
       // Start screen
       case 'typingBlip':       typingBlip();       break;
       case 'buttonClick':      buttonClick();      break;
+      case 'registerSuccess':  registerSuccess();  break;
 
       // Ambient
       case 'startDungeonHum':  startDungeonHum();  break;
@@ -469,6 +492,7 @@ const Audio = (() => {
       case 'dragonRoar':       dragonRoar();       break;
       case 'dragonExplosion':  dragonExplosion();  break;
       case 'portalWhoosh':     portalWhoosh();     break;
+      case 'fireBreath':       fireBreath();       break;
 
       // Timer
       case 'startHeartbeat':   startHeartbeat();   break;
@@ -564,6 +588,15 @@ document.addEventListener('DOMContentLoaded', () => {
       Audio.play('stopUrgentBeep');
       Audio.play('stopDungeonHum');
       origGameWin();
+    };
+  }
+
+  // ── showSuccess — register sound ───────────
+  const origShowSuccess = window.showSuccess;
+  if (typeof origShowSuccess === 'function') {
+    window.showSuccess = function (name) {
+      Audio.play('registerSuccess');
+      origShowSuccess(name);
     };
   }
 

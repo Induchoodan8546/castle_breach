@@ -130,30 +130,38 @@ const CP3 = (() => {
             <!-- Clickable dragon body -->
             <div class="cp3-object cp3-dragon" id="obj-monster" data-obj="monster">
               <div class="dragon-wrap" id="dragonWrap">
-                <div class="dragon-wing dw-left"></div>
-                <div class="dragon-wing dw-right"></div>
-                <div class="dragon-body">
-                  <div class="dragon-eye de-left"></div>
-                  <div class="dragon-eye de-right"></div>
-                  <div class="dragon-nostril n1"></div>
-                  <div class="dragon-nostril n2"></div>
-                  <div class="dragon-fang f1"></div>
-                  <div class="dragon-fang f2"></div>
+                <div class="dragon-skull">
+                  <div class="skull-horn sh-left"></div>
+                  <div class="skull-horn sh-right"></div>
+                  <div class="skull-eye se-left"></div>
+                  <div class="skull-eye se-right"></div>
+                  <div class="dragon-jaw"></div>
                 </div>
-                <div class="dragon-neck"></div>
-                <div class="dragon-torso">
-                  <div class="dragon-scale sc1"></div>
-                  <div class="dragon-scale sc2"></div>
-                  <div class="dragon-scale sc3"></div>
-                  <div class="dragon-tablet"><div class="tablet-text">MD5</div></div>
+
+                <div class="dragon-body-wrap">
+                  <div class="dragon-core">
+                    <div class="dragon-tablet"><div class="tablet-text">MD5</div></div>
+                  </div>
+                  <!-- CSS Segments from Head to Tail -->
+                  <div class="s-seg seg-1">
+                    <div class="dragon-wing dw-left"></div>
+                    <div class="dragon-wing dw-right"></div>
+                    <div class="s-ribs"></div>
+                    <div class="s-spine"></div>
+                  </div>
+                  <div class="s-seg seg-2"><div class="s-ribs"></div><div class="s-spine"></div></div>
+                  <div class="s-seg seg-3"><div class="s-ribs"></div><div class="s-spine"></div></div>
+                  <div class="s-seg seg-4"><div class="s-ribs"></div><div class="s-spine"></div></div>
+                  <div class="s-seg seg-5"><div class="s-ribs"></div><div class="s-spine"></div></div>
+                  <div class="s-seg seg-6"><div class="s-ribs"></div><div class="s-spine"></div></div>
+                  <div class="s-seg seg-7"><div class="s-ribs"></div><div class="s-spine"></div></div>
                 </div>
-                <div class="dragon-tail"></div>
-                <div class="dragon-claw cl-left"></div>
-                <div class="dragon-claw cl-right"></div>
+
                 <div class="dragon-fire" id="dragonFire">
                   <span class="fire-particle fp1"></span>
                   <span class="fire-particle fp2"></span>
                   <span class="fire-particle fp3"></span>
+                  <span class="fire-particle fp4"></span>
                 </div>
                 <div class="dragon-explosion" id="dragonExplosion">
                   <span class="exp-ring er1"></span>
@@ -161,7 +169,7 @@ const CP3 = (() => {
                   <span class="exp-burst"></span>
                 </div>
               </div>
-              <div class="obj-label dragon-label">🔥 INFERNAL DRAKE 🔥</div>
+              <div class="obj-label dragon-label">🔥 ARCANE SERPENT 🔥</div>
             </div>
 
           </div>
@@ -246,11 +254,25 @@ const CP3 = (() => {
     function startDragonIdle() {
         const fire = document.getElementById('dragonFire');
 
-        // Fire breath every 3s
-        monsterIdle = setInterval(() => {
+        // Fire breath every 3s to 5s randomly
+        function scheduleBreath() {
             if (flagSubmitted) return;
-            if (fire) { fire.classList.add('active'); setTimeout(() => fire.classList.remove('active'), 900); }
-        }, 3000);
+            monsterIdle = setTimeout(() => {
+                if (flagSubmitted) return;
+                
+                if (typeof Audio !== 'undefined') {
+                    Audio.play('fireBreath');
+                }
+                
+                if (fire) { 
+                    fire.classList.add('active'); 
+                    setTimeout(() => fire.classList.remove('active'), 1200); 
+                }
+                
+                scheduleBreath();
+            }, 3000 + Math.random() * 2000);
+        }
+        scheduleBreath();
 
         // Magic particle trail every 400ms
         setInterval(() => {
@@ -343,7 +365,7 @@ const CP3 = (() => {
 
         if (answer === CORRECT_FLAG) {
             flagSubmitted = true;
-            clearInterval(monsterIdle);
+            clearTimeout(monsterIdle);
 
             if (typeof Audio !== 'undefined') Audio.play('flagCaptured');
             feedback.textContent = '✅ SPELL CAST! DRAGON DEFEATED!';
@@ -426,7 +448,7 @@ const CP3 = (() => {
     function load() {
         flagSubmitted = false;
         attempts = 0;
-        clearInterval(monsterIdle);
+        clearTimeout(monsterIdle);
         buildScene();
         injectStyles();
     }
@@ -692,7 +714,7 @@ const CP3 = (() => {
       100% { opacity:0; transform:scale(0.2) translateY(-28px); }
     }
 
-    /* Dragon object — no longer absolutely positioned by itself */
+    /* Dragon object */
     .cp3-dragon {
       position:absolute;
       left:50%; top:50%;
@@ -703,105 +725,184 @@ const CP3 = (() => {
     }
     .dragon-label {
       font-family:'Press Start 2P',monospace;
-      font-size:5px!important; color:#ff2200!important;
-      text-shadow:0 0 10px #ff4400, 0 0 20px #cc0000, 0 0 30px #880000!important;
-      letter-spacing:1px; margin-top:6px;
+      font-size:5px!important; color:#bb44ff!important;
+      text-shadow:0 0 10px #9900ff, 0 0 20px #5500aa, 0 0 30px #220055!important;
+      letter-spacing:1px; margin-top:20px;
       animation:blink 0.8s step-end infinite;
     }
 
-    /* Hover — body bobs up and rotates slightly */
+    /* Hover — body undulates */
     .dragon-wrap {
       position:relative; display:flex; flex-direction:column; align-items:center;
-      animation:dragon-hover 1.8s ease-in-out infinite alternate;
+      animation:dragon-hover 2.5s ease-in-out infinite alternate;
     }
     @keyframes dragon-hover {
-      0%   { transform:translateY(0)    rotate(-4deg); }
-      50%  { transform:translateY(-12px) rotate(0deg);  }
-      100% { transform:translateY(-4px)  rotate(4deg);  }
+      0%   { transform:translateY(0); }
+      100% { transform:translateY(-15px); }
     }
     .dragon-wrap.exploding {
       animation:dragon-explode 0.8s ease-out forwards;
     }
     @keyframes dragon-explode {
-      0%   { transform:scale(1);   opacity:1; }
-      50%  { transform:scale(1.6); opacity:0.8; }
-      100% { transform:scale(0);   opacity:0; }
+      0%   { transform:scale(1);   opacity:1; filter:brightness(1); }
+      50%  { transform:scale(1.5); opacity:0.8; filter:brightness(2); }
+      100% { transform:scale(0);   opacity:0; filter:brightness(3); }
     }
 
-    /* Wings — dark leathery */
-    .dragon-wing {
-      position:absolute; top:20px;
-      width:62px; height:55px;
-      background:linear-gradient(135deg,#1a0000,#0a0000);
-      border:1px solid #880000;
-      box-shadow:0 0 12px rgba(200,0,0,0.5), inset 0 0 8px rgba(0,0,0,0.9);
+    /* ── Gruesome Skeleton Dragon CSS ── */
+    .dragon-skull {
+      width: 64px; height: 60px;
+      background: linear-gradient(180deg, #3a005c, #16002b);
+      border: 3px solid #ff44aa;
+      border-radius: 40% 40% 60% 60%;
+      clip-path: polygon(50% 0%, 95% 30%, 100% 70%, 75% 100%, 25% 100%, 0% 70%, 5% 30%);
+      position: relative;
+      z-index: 20;
+      box-shadow: inset 0 0 15px rgba(255,0,255,0.4), 0 0 20px rgba(138, 0, 255, 0.6);
+      filter: drop-shadow(0 0 10px rgba(255,100,255,0.3));
+      animation: dragon-hover 2.5s ease-in-out infinite alternate;
     }
-    .dw-left  { left:-64px;  clip-path:polygon(100% 0%,100% 80%,0% 100%,5% 35%); transform-origin:right center;
-                animation:wing-beat-l 0.45s ease-in-out infinite alternate; }
-    .dw-right { right:-64px; clip-path:polygon(0% 0%,0% 80%,100% 100%,95% 35%);  transform-origin:left center;
-                animation:wing-beat-r 0.45s ease-in-out infinite alternate; }
+    
+    .dragon-jaw {
+      position: absolute; bottom: -12px; left: 15%; right: 15%; height: 16px;
+      background: #0d001a; border: 2px solid #ff44aa;
+      border-radius: 0 0 50% 50%;
+    }
+    
+    .skull-horn {
+      position: absolute; top: -28px;
+      width: 18px; height: 48px;
+      background: linear-gradient(180deg, #ff44aa, #3a005c);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .sh-left { left: 4px; transform: rotate(-35deg); }
+    .sh-right { right: 4px; transform: rotate(35deg); }
+    
+    .skull-eye {
+      position: absolute; top: 22px;
+      width: 20px; height: 10px;
+      background: #fff;
+      clip-path: polygon(0 50%, 50% 0, 100% 50%, 50% 100%);
+      filter: drop-shadow(0 0 8px #ff44aa) drop-shadow(0 0 16px #ff44aa) drop-shadow(0 0 20px #fff);
+      animation: eye-glaze 1.5s infinite alternate;
+    }
+    .se-left { left: 4px; transform: rotate(15deg); }
+    .se-right { right: 4px; transform: rotate(-15deg); }
+    
+    @keyframes eye-glaze {
+      0% { filter: drop-shadow(0 0 8px #ff44aa) drop-shadow(0 0 16px #ff44aa); transform: scale(1) rotate(15deg); }
+      100% { filter: drop-shadow(0 0 12px #ff44aa) drop-shadow(0 0 24px #ffbbff); transform: scale(1.15) rotate(15deg); }
+    }
+    
+    .dragon-body-wrap {
+      position: absolute; top: 40px;
+      display: flex; flex-direction: column; align-items: center;
+      z-index: 10;
+    }
+    
+    /* Spine and Rib Segments */
+    .s-seg {
+      position: relative;
+      margin-top: -16px; /* Overlap to create connected skeleton */
+      display: flex; flex-direction: column; align-items: center;
+      opacity: 0.95;
+      animation: slither-bone 3s infinite ease-in-out;
+    }
+    .s-spine {
+      width: 48px; height: 38px;
+      background: linear-gradient(180deg, #440066, #16002b);
+      border: 2px solid #ff44aa;
+      border-radius: 50% 50% 20% 20%;
+      position: relative; z-index: 2;
+      box-shadow: inset 0 0 10px rgba(255,0,255,0.4), 0 0 12px rgba(138,0,255,0.6);
+    }
+    .s-ribs {
+      position: absolute; top: 10px;
+      width: 140px; height: 20px;
+      border-top: 6px solid #2a0044;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      z-index: 1;
+      filter: drop-shadow(0 5px 12px rgba(0,0,0,0.9));
+    }
+    .s-ribs::before, .s-ribs::after {
+      content: ''; position: absolute; top: -14px; width: 10px; height: 32px; 
+      background: linear-gradient(180deg, #ff44aa, #440066);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+    .s-ribs::before { left: -5px; transform: rotate(-35deg); }
+    .s-ribs::after { right: -5px; transform: rotate(35deg); }
+
+    /* Wings */
+    .dragon-wing {
+      position:absolute; top:-20px;
+      width:110px; height:80px;
+      background:linear-gradient(135deg,#2a0044,#0d001a);
+      border:2px solid #a200ff;
+      box-shadow:0 0 20px rgba(162,0,255,0.5), inset 0 0 12px rgba(0,0,0,0.9);
+      z-index: 0;
+    }
+    .dw-left  { left:-100px; clip-path:polygon(100% 0%,100% 80%,0% 100%,10% 35%); transform-origin:right center;
+                animation:wing-beat-l 0.5s ease-in-out infinite alternate; }
+    .dw-right { right:-100px; clip-path:polygon(0% 0%,0% 80%,100% 100%,90% 35%);  transform-origin:left center;
+                animation:wing-beat-r 0.5s ease-in-out infinite alternate; }
     @keyframes wing-beat-l {
       0%   { transform:rotateZ(0deg)   scaleY(1);    }
-      30%  { transform:rotateZ(-28deg) scaleY(0.45); }
-      75%  { transform:rotateZ(10deg)  scaleY(1.25); }
-      100% { transform:rotateZ(0deg)   scaleY(1);    }
+      40%  { transform:rotateZ(-20deg) scaleY(0.6); }
+      100% { transform:rotateZ(10deg)  scaleY(1.3); }
     }
     @keyframes wing-beat-r {
       0%   { transform:rotateZ(0deg)  scaleY(1);    }
-      30%  { transform:rotateZ(28deg) scaleY(0.45); }
-      75%  { transform:rotateZ(-10deg) scaleY(1.25); }
-      100% { transform:rotateZ(0deg)  scaleY(1);    }
+      40%  { transform:rotateZ(20deg) scaleY(0.6); }
+      100% { transform:rotateZ(-10deg) scaleY(1.3); }
     }
 
-    .dragon-body {
-      width:66px; height:48px;
-      background:linear-gradient(135deg,#1a0000,#0d0000);
-      border:2px solid #cc0000; border-radius:40% 40% 30% 30%;
-      position:relative; display:flex; align-items:center; justify-content:center; gap:10px;
-      box-shadow:0 0 28px rgba(255,0,0,0.8), 0 0 50px rgba(180,0,0,0.4), inset 0 0 12px rgba(0,0,0,0.9);
-    }
-    .dragon-eye {
-      width:11px; height:11px; border-radius:50%;
-      background:radial-gradient(circle,#ffffff 20%,#ffcc00 50%,#ff4400 80%,#cc0000);
-      box-shadow:0 0 10px #ff6600, 0 0 20px #ff2200, 0 0 35px #ff0000;
-      animation:eye-glow 0.7s ease-in-out infinite alternate;
-    }
-    @keyframes eye-glow { 0%{box-shadow:0 0 8px #ff6600,0 0 16px #ff2200} 100%{box-shadow:0 0 20px #ffcc00,0 0 35px #ff4400,0 0 50px #ff0000} }
-    .dragon-nostril { position:absolute; bottom:6px; width:5px; height:4px; background:#050000; border-radius:50%; box-shadow:0 0 4px #ff2200; }
-    .n1{left:18px} .n2{right:18px}
-    .dragon-fang { position:absolute; bottom:-12px; width:7px; height:14px; background:linear-gradient(180deg,#cccccc,#aaaaaa); clip-path:polygon(25% 0%,75% 0%,50% 100%); filter:drop-shadow(0 2px 4px rgba(255,0,0,0.5)); }
-    .f1{left:14px} .f2{right:14px}
+    /* Scale & Delay for Each Segment (Slithering Tail) */
+    .seg-1 { --s: 1.3;  animation-delay: 0.1s; z-index: 6; }
+    .seg-2 { --s: 1.1;  animation-delay: 0.3s; z-index: 5; }
+    .seg-3 { --s: 0.95; animation-delay: 0.5s; z-index: 4; }
+    .seg-4 { --s: 0.8;  animation-delay: 0.7s; z-index: 3; }
+    .seg-5 { --s: 0.6;  animation-delay: 0.9s; z-index: 2; margin-top:-20px;}
+    .seg-6 { --s: 0.45; animation-delay: 1.1s; z-index: 1; margin-top:-24px; }
+    .seg-7 { --s: 0.3;  animation-delay: 1.3s; z-index: 0; margin-top:-28px; }
 
-    .dragon-neck {
-      width:26px; height:20px;
-      background:linear-gradient(180deg,#1a0000,#0d0000);
-      border-left:1px solid #880000; border-right:1px solid #880000;
+    @keyframes slither-bone {
+      0%, 100% { transform: translateX(0) scale(var(--s, 1)) rotate(0deg); }
+      25%  { transform: translateX(35px) scale(var(--s, 1)) rotate(12deg); }
+      75%  { transform: translateX(-35px) scale(var(--s, 1)) rotate(-12deg); }
     }
-    .dragon-torso {
-      width:75px; height:60px;
-      background:linear-gradient(135deg,#1a0000,#0d0000);
-      border:2px solid #aa0000; border-radius:30%;
-      position:relative; display:flex; align-items:center; justify-content:center;
-      box-shadow:0 0 20px rgba(200,0,0,0.6), inset 0 0 15px rgba(0,0,0,0.9);
+
+    .dragon-core {
+      position: absolute;
+      top: 35px; z-index: 25;
+      animation: slither-bone 3s infinite ease-in-out 0.2s;
+      --s: 1.25;
     }
-    .dragon-scale { position:absolute; width:16px; height:11px; background:linear-gradient(135deg,#2a0000,#150000); border:1px solid #660000; border-radius:50% 50% 0 0; box-shadow:0 0 4px rgba(200,0,0,0.3); }
-    .sc1{top:6px;left:8px} .sc2{top:6px;right:8px} .sc3{top:20px;left:50%;transform:translateX(-50%)}
-    .dragon-tablet { position:absolute; bottom:-8px; width:46px; height:24px; background:linear-gradient(135deg,#0d0000,#050000); border:1px solid #cc0000; display:flex; align-items:center; justify-content:center; box-shadow:0 0 12px rgba(255,0,0,0.6); }
-    .tablet-text { font-family:'Press Start 2P',monospace; font-size:7px; color:#ff3300; text-shadow:0 0 8px #ff0000, 0 0 16px #880000; letter-spacing:1px; }
+    .dragon-tablet { 
+      width: 48px; height: 26px; 
+      background: linear-gradient(135deg, #111, #000); 
+      border: 2px solid rgba(255,255,255,0.6); 
+      display: flex; align-items: center; justify-content: center; 
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4); 
+    }
+    .tablet-text { 
+      font-family: 'Press Start 2P', monospace; font-size: 8px; 
+      color: #fff; text-shadow: 0 0 8px #fff, 0 0 16px #aaa; 
+      letter-spacing: 2px; 
+    }
 
-    .dragon-tail { width:55px; height:18px; background:linear-gradient(90deg,#1a0000,#0a0000); border:1px solid #660000; border-radius:0 50% 50% 0; align-self:flex-end; margin-right:-22px; box-shadow:0 0 8px rgba(180,0,0,0.4); }
-    .dragon-claw { position:absolute; bottom:-16px; width:22px; height:18px; background:linear-gradient(180deg,#1a0000,#0a0000); border:1px solid #770000; box-shadow:0 0 6px rgba(200,0,0,0.5); }
-    .cl-left{left:6px;clip-path:polygon(0% 0%,100% 0%,80% 100%,50% 80%,20% 100%)}
-    .cl-right{right:6px;clip-path:polygon(0% 0%,100% 0%,80% 100%,50% 80%,20% 100%)}
-
-    /* Fire breath */
-    .dragon-fire { position:absolute; top:10px; left:-70px; width:70px; height:24px; display:none; }
-    .dragon-fire.active { display:flex; align-items:center; }
-    .fire-particle { position:absolute; border-radius:50%; animation:fire-shoot 0.5s ease-out infinite; }
-    .fp1{width:22px;height:18px;background:rgba(255,50,0,0.95);left:0;animation-delay:0s;box-shadow:0 0 10px #ff4400}
-    .fp2{width:18px;height:14px;background:rgba(255,140,0,0.95);left:18px;animation-delay:.08s;box-shadow:0 0 8px #ff8800}
-    .fp3{width:12px;height:10px;background:rgba(255,220,0,0.9);left:32px;animation-delay:.16s;box-shadow:0 0 6px #ffcc00}
-    @keyframes fire-shoot{0%{transform:scaleX(0.7) scaleY(1.2)}50%{transform:scaleX(1.3) scaleY(0.8)}100%{transform:scaleX(0.7) scaleY(1.2)}}
+    /* Fire breath (Gruesome Bone Fire) */
+    .dragon-fire { position:absolute; top:35px; left:-6px; right:-6px; height:80px; display:none; flex-direction:column; align-items:center; z-index:20; }
+    .dragon-fire.active { display:flex; }
+    .fire-particle { position:absolute; border-radius:50%; animation:fire-shoot 0.6s ease-out infinite; }
+    .fp1{width:22px;height:22px;background:rgba(255,255,255,0.9);top:0;animation-delay:0s;box-shadow:0 0 15px #fff}
+    .fp2{width:18px;height:18px;background:rgba(200,200,200,0.9);top:25px;animation-delay:.1s;box-shadow:0 0 12px #ccc}
+    .fp3{width:14px;height:14px;background:rgba(150,150,150,0.9);top:45px;animation-delay:.2s;box-shadow:0 0 10px #aaa}
+    .fp4{width:28px;height:28px;background:rgba(255,255,255,0.6);top:10px;animation-delay:.05s;box-shadow:0 0 20px #fff;filter:blur(2px)}
+    
+    @keyframes fire-shoot{
+      0% { transform: scale(0.5) translateY(0); opacity: 1; }
+      100% { transform: scale(2) translateY(60px); opacity: 0; }
+    }
 
     /* Explosion */
     .dragon-explosion{position:absolute;top:-20px;left:-30px;display:none;}
