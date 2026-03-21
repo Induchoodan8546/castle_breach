@@ -103,7 +103,7 @@ Encoded message: eWR3bGZkcV9mZHBocnY=
 
 
 `,
-      hint:     'ceaser shift his base 64 times before 3',
+      hint:     'julius ceaser shift his base  before 3',
       answer:   'flag{vatican_cameos}',
       flag:     'flag{vatican_cameos}',
     },
