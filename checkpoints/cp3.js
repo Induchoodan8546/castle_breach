@@ -7,9 +7,9 @@
 const CP3 = (() => {
 
     // ── Puzzle data ────────────────────────────
-    const MD5_HASH = '5f4dcc3b5aa765d61d8327deb882cf99';
-    const ANSWER = 'password';
-    const CORRECT_FLAG = 'flag{password}';
+    const MD5_HASH = '3b2d8f129ae2f408f2153cd9ce663043';
+    const ANSWER = '2962';
+    const CORRECT_FLAG = 'flag{2962}';
 
     let flagSubmitted = false;
     let attempts = 0;
@@ -40,7 +40,7 @@ const CP3 = (() => {
             icon: '🐉',
             text: 'The dragon turns its burning eyes toward you. Around its neck hangs a cracked obsidian tablet. Carved into the tablet:',
             code: MD5_HASH,
-            hint: 'This is an MD5 hash. The Romans were fond of shifting messages',
+            hint: 'This is an MD5 hash. hash em out of the box',
             clue: true,
         },
     };
