@@ -28,7 +28,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 	team, err := CreateTeam(body.Name)
 	if err != nil {
-		respondError(w, http.StatusConflict, "team name already taken")
+		respondError(w, http.StatusConflict, "name already taken")
 		return
 	}
 

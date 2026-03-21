@@ -352,9 +352,7 @@ const CP3 = (() => {
             document.getElementById('cp3FlagBtn').disabled = true;
 
             if (typeof captureFlag === 'function') captureFlag(3);
-            if (typeof API !== 'undefined') {
-                API.validateFlag(GameState.teamId, 3, answer).catch(() => { });
-            }
+
 
             setTimeout(() => {
                 closeModal();

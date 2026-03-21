@@ -1,54 +1,66 @@
 /* ═══════════════════════════════════════════════
    CASTLE BREACH — api.js
    All communication with the backend.
-   Swap BASE_URL to your friend's deployed URL.
+   Now loads EXCLUSIVELY from .env at runtime.
 ════════════════════════════════════════════════ */
 
 const API = (() => {
 
-  // ── Change this when friend's server is live ──
-  const BASE_URL = 'http://localhost:3000';
+  let config = {}; // No hardcoded defaults
 
-  // POST /api/team/register  →  { teamId, token }
+  const loadConfig = async () => {
+    try {
+      const res = await fetch('.env');
+      if (!res.ok) throw new Error('Could not load .env');
+      
+      const text = await res.text();
+      text.split('\n').map(line => line.trim()).filter(line => line && !line.startsWith('#')).forEach(line => {
+        const [key, value] = line.split('=');
+        if (key && value) config[key.trim()] = value.trim().replace(/^['"]|['"]$/g, '');
+      });
+      window.CONFIG = config;
+    } catch (e) {
+      console.error('Critical Error: .env configuration missing or unreachable.', e);
+    }
+  };
+
+  const configPromise = loadConfig();
+
+  async function getBaseUrl() {
+    await configPromise;
+    if (!config.API_BASE_URL) throw new Error('API_BASE_URL not found in .env');
+    return config.API_BASE_URL;
+  }
+
   async function registerTeam(teamName) {
-    const res = await fetch(`${BASE_URL}/api/team/register`, {
+    const baseUrl = await getBaseUrl();
+    const res = await fetch(`${baseUrl}/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ teamName }),
+      body: JSON.stringify({ name: teamName }),
     });
     if (!res.ok) throw new Error('Registration failed');
     return res.json();
   }
 
-  // POST /api/validate-flag  →  { success, message }
-  async function validateFlag(teamId, checkpoint, flag) {
-    const res = await fetch(`${BASE_URL}/api/validate-flag`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ teamId, checkpoint, flag }),
-    });
-    if (!res.ok) throw new Error('Validation failed');
-    return res.json();
-  }
+  async function SubmitScore(checkpoint, time) {
+    const baseUrl = await getBaseUrl();
+    const token = localStorage.getItem("Token");
 
-  // POST /api/score/update  →  { updated }
-  async function updateScore(teamId, checkpoint, time) {
-    const res = await fetch(`${BASE_URL}/api/score/update`, {
+    const res = await fetch(`${baseUrl}/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ teamId, checkpoint, time }),
+      body: JSON.stringify({
+        token: token,
+        time_taken: time,
+        flag: String(checkpoint)
+      }),
     });
+
     if (!res.ok) throw new Error('Score update failed');
     return res.json();
   }
 
-  // GET /api/leaderboard  →  [{ team, flags, time }]
-  async function getLeaderboard() {
-    const res = await fetch(`${BASE_URL}/api/leaderboard`);
-    if (!res.ok) throw new Error('Leaderboard fetch failed');
-    return res.json();
-  }
-
-  return { registerTeam, validateFlag, updateScore, getLeaderboard };
+  return { registerTeam, SubmitScore, configPromise };
 
 })();
