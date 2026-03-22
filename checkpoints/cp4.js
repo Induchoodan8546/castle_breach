@@ -16,43 +16,24 @@ const CP4 = (() => {
       id:       'steg',
       number:   1,
       icon:     '🖼',
-      title:    'THE HIDDEN PAINTING',
+      title:    'computer language',
       subtitle: 'Steganography',
       difficulty: '★★★★☆',
-      story:    'On the tower wall hangs an ancient painting. But something is concealed within its pixels. The princess left a message hidden in plain sight.',
-      puzzle:   `A message has been hidden inside an image using LSB steganography.
-The image pixel RGB values (first 8 pixels) are:
+      story:    'Chuck Norris can speak binary in ASCII.',
+      puzzle:   `A message has been hidden in binary:
+      01100001 01001000 01010010 01110111 
+      01001001 01000111 01101100 01111010 01001001 
+      01000111 01110100 01101100 01100101 01010001 
+      00111101 00111101
 
-Pixel 1:  R=198 G=143 B=222
-Pixel 2:  R=201 G=168 B=195
-Pixel 3:  R=176 G=133 B=210
-Pixel 4:  R=183 G=154 B=221
-Pixel 5:  R=200 G=171 B=198
-Pixel 6:  R=179 G=130 B=213
-Pixel 7:  R=205 G=166 B=199
-Pixel 8:  R=182 G=141 B=224
 
-Extract the LSB (least significant bit) of each RED channel value:
-198 = 11000110 → LSB = 0
-201 = 11001001 → LSB = 1
-176 = 10110000 → LSB = 0
-183 = 10110111 → LSB = 1
-200 = 11001000 → LSB = 0
-179 = 10110011 → LSB = 1
-205 = 11001101 → LSB = 1
-182 = 10110110 → LSB = 0
-
-Binary string: 01010110
-Convert to ASCII: 01010110 = 86 = V
-
-The hidden letter is V. The full hidden word spelled across all channels is:
-flag{steg_vision}`,
-      hint:     'LSB Steganography hides data in the least significant bit of pixel values. Extract the LSB of each red channel, convert binary to ASCII.',
-      answer:   'flag{steg_vision}',
-      flag:     'flag{steg_vision}',
+`,
+      hint:     'ASCII does not give you everything you ask for',
+      answer:   'flag{htp is key}',
+      flag:     'flag{htp is key}',
     },
 
-    // ── Challenge 2: RSA Decryption ─────────
+    // ── Challenge 2: RSA Decryption  ─────────
     {
       id:       'rsa',
       number:   2,
@@ -61,31 +42,25 @@ flag{steg_vision}`,
       subtitle: 'RSA Decryption',
       difficulty: '★★★★★',
       story:    'A rusty iron key hangs behind a glass case. The case is sealed with an RSA-encrypted combination. Crack the cipher to claim the key.',
-      puzzle:   `RSA Parameters:
+      puzzle:   `RSA Parameters(target in ASCII):
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 p = 61
 q = 53
-n = p × q = 3233
+n = ?
 e = 17
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 Ciphertext (C) = 2790
 
 To decrypt:
-1. Calculate φ(n) = (p-1)(q-1) = 60 × 52 = 3120
+1. Calculate φ(n) 
 2. Find d such that: d × e ≡ 1 (mod φ(n))
-   d × 17 ≡ 1 (mod 3120)
-   d = 2753  (modular inverse)
+   
 3. Decrypt: M = C^d mod n
-   M = 2790^2753 mod 3233
-   M = 65
-
-ASCII value 65 = 'A'
-
-The decrypted message spells: ARISE
-The flag is: flag{rsa_unlocked}`,
+   
+`,
       hint:     'Use the RSA formula: M = C^d mod n. First find d using modular inverse of e mod φ(n). φ(n) = (p-1)(q-1).',
-      answer:   'flag{rsa_unlocked}',
-      flag:     'flag{rsa_unlocked}',
+      answer:   'flag{65}',
+      flag:     'flag{65}',
     },
 
     // ── Challenge 3: Reverse Engineering ────
