@@ -162,48 +162,18 @@ The flag is: flag{xor_storm}`,
       number:   5,
       icon:     '🪙',
       title:    'THE ROYAL TOKEN',
-      subtitle: 'JWT Decode + Manipulation',
+      subtitle: ' Decode + Manipulation',
       difficulty: '★★★★★',
-      story:    'The final lock requires a royal token — a JWT bearing the princess\'s seal. A token exists but has been forged with the wrong role. Decode it, find the flaw, and craft the correct token.',
-      puzzle:   `You intercept this JWT token:
+      story:    'A URL-safe token used for authentication and authorization between systems.',
+      puzzle:   `Be the high-functioning sociopath and use your wits:
 
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaGVybyIsInJvbGUiOiJndWVzdCIsInRhcmdldCI6InByaW5jZXNzIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyIjoid2F0c29uIiwicm9sZSI6InZpc2l0b3IiLCJ0YXJnZXQiOiJpcmVuZSJ9.
 
-Decode the payload (Base64url):
-eyJ1c2VyIjoiaGVybyIsInJvbGUiOiJndWVzdCIsInRhcmdldCI6InByaW5jZXNzIn0
 
-Decoded JSON:
-{
-  "user":   "hero",
-  "role":   "guest",
-  "target": "princess"
-}
-
-The role is "guest" — insufficient access.
-You need role: "rescuer"
-
-Craft a new payload:
-{
-  "user":   "hero",
-  "role":   "rescuer",
-  "target": "princess"
-}
-
-Base64url encode new payload:
-eyJ1c2VyIjoiaGVybyIsInJvbGUiOiJyZXNjdWVyIiwidGFyZ2V0IjoicHJpbmNlc3MifQ
-
-The vulnerability: algorithm set to "none" bypasses signature verification.
-
-New header with alg:none:
-eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0
-
-Forged token:
-eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyIjoiaGVybyIsInJvbGUiOiJyZXNjdWVyIiwidGFyZ2V0IjoicHJpbmNlc3MifQ.
-
-The flag is: flag{princess_rescued}`,
-      hint:     'Decode the JWT payload from Base64url. The role field is "guest" — it needs to be "rescuer". Use the alg:none vulnerability to forge a valid token without a signature.',
-      answer:   'flag{princess_rescued}',
-      flag:     'flag{princess_rescued}',
+The flag is: flag{irene}`,
+      hint:     ' target is ur key . Use the alg:none vulnerability to forge a valid token without a signature.',
+      answer:   'flag{irene}',
+      flag:     'flag{irene}',
     },
   ];
 
