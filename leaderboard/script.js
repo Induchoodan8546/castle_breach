@@ -100,14 +100,72 @@ const Leaderboard = (() => {
       return a.total_time_seconds - b.total_time_seconds;
     });
 
-    tableBody.innerHTML = sorted.map((entry, index) => `
-      <tr>
-        <td class="rank">#${(index + 1).toString().padStart(2, '0')}</td>
-        <td class="name">${escapeHTML(entry.team_name)}</td>
-        <td class="flags">${entry.flags_captured} / ${maxFlags}</td>
-        <td class="time">${formatTime(entry.total_time_seconds)}</td>
-      </tr>
-    `).join('');
+    tableBody.innerHTML = sorted.map((entry, index) => {
+      const flagsJson = JSON.stringify(entry.flags || []);
+      return `
+        <tr class="team-row" data-team-name="${escapeHTML(entry.team_name)}" data-flags='${flagsJson}'>
+          <td class="rank">#${(index + 1).toString().padStart(2, '0')}</td>
+          <td class="name">${escapeHTML(entry.team_name)}</td>
+          <td class="flags">${entry.flags_captured} / ${maxFlags}</td>
+          <td class="time">${formatTime(entry.total_time_seconds)}</td>
+        </tr>
+      `;
+    }).join('');
+
+    // Add click event listeners to rows
+    document.querySelectorAll('.team-row').forEach(row => {
+      row.onclick = () => toggleDetails(row);
+    });
+  }
+
+  function toggleDetails(row) {
+    const nextRow = row.nextElementSibling;
+    if (nextRow && nextRow.classList.contains('details-row')) {
+      nextRow.remove();
+      row.classList.remove('expanded');
+      return;
+    }
+
+    // Collapse others if any
+    document.querySelectorAll('.details-row').forEach(r => r.remove());
+    document.querySelectorAll('.team-row.expanded').forEach(r => r.classList.remove('expanded'));
+
+    const flags = JSON.parse(row.dataset.flags || '[]');
+    const detailsRow = document.createElement('tr');
+    detailsRow.className = 'details-row';
+    
+    let checkpointHTML = '';
+    if (flags.length === 0) {
+      checkpointHTML = '<div class="no-checkpoints">NO CHECKPOINTS COMPLETED</div>';
+    } else {
+      checkpointHTML = `
+        <div class="checkpoint-list">
+          ${flags.map(f => {
+            const isObj = (typeof f === 'object' && f !== null);
+            const name = isObj ? (f.flag_name || 'UNKNOWN') : f;
+            const time = isObj ? (f.time_taken !== undefined ? f.time_taken + 's' : '') : '';
+            return `
+              <div class="checkpoint-item">
+                <span class="cp-label">${escapeHTML(name.toString())}</span>
+                <span class="cp-time">${time}</span>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    detailsRow.innerHTML = `
+      <td colspan="4">
+        <div class="details-content">
+          <div class="details-header">MISSION PROTOCOLS / CHECKPOINT LOGS</div>
+          ${checkpointHTML}
+        </div>
+      </td>
+    `;
+    
+    row.after(detailsRow);
+    row.classList.add('expanded');
   }
 
   function formatTime(seconds) {

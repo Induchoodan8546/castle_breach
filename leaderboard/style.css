@@ -200,8 +200,89 @@ td {
   border-bottom: 1px solid rgba(255, 68, 0, 0.1);
 }
 
-tr:hover {
+tr.team-row {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+tr.team-row:hover {
+  background: rgba(255, 68, 0, 0.15);
+}
+
+tr.team-row.expanded {
   background: rgba(255, 68, 0, 0.1);
+  border-left: 4px solid var(--orange);
+}
+
+.details-row td {
+  padding: 0;
+  border-bottom: 2px solid rgba(255, 68, 0, 0.2);
+}
+
+.details-content {
+  padding: 1.5rem;
+  background: rgba(13, 5, 0, 0.6);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.details-header {
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  color: var(--orange-dim);
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  border-bottom: 1px dashed var(--orange-dim);
+  padding-bottom: 5px;
+}
+
+.checkpoint-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.checkpoint-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--black-light);
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--orange-dark);
+  position: relative;
+}
+
+.checkpoint-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--orange);
+}
+
+.cp-label {
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  color: var(--yellow);
+  text-transform: uppercase;
+}
+
+.cp-time {
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  color: var(--orange-bright);
+}
+
+.no-checkpoints {
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  color: var(--orange-dark);
+  text-align: center;
+  padding: 1rem;
 }
 
 tr.loading td {

@@ -53,7 +53,7 @@ const API = (() => {
       body: JSON.stringify({
         token: token,
         time_taken: time,
-        flag: String(checkpoint)
+        flag: checkpoint
       }),
     });
 

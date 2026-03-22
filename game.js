@@ -78,7 +78,7 @@ function captureFlag(checkpointNum) {
     GameState.checkpointTimes[checkpointNum] = getElapsed();
     document.getElementById('hudFlags').textContent =
         `${GameState.flagsCaptured}/${GameState.totalFlags}`;
-    API.SubmitScore(checkpointNum, getElapsed());
+    API.SubmitScore(`Cp${checkpointNum}`, getCpDuration(checkpointNum));
 }
 
 // ── Game Over ──────────────────────────────────
