@@ -138,7 +138,7 @@ Key (ASCII): STORM
       subtitle: ' Decode + Manipulation',
       difficulty: '★★★★★',
       story:    'A URL-safe token used for authentication and authorization between systems.',
-      puzzle:   `Be the high-functioning sociopath and use your wits:
+      puzzle:   `Be the high-functioning sociopath and use your wits(A scandal in Bulgeria):
 
 eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyIjoid2F0c29uIiwicm9sZSI6InZpc2l0b3IiLCJ0YXJnZXQiOiJpcmVuZSJ9.
 
