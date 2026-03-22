@@ -93,7 +93,7 @@ Encoded message: eWR3bGZkcV9mZHBocnY=
       difficulty: '★★★★☆',
       story:    '8 into 2.',
       puzzle:   ` hex:
-24 30 2C 35 2F 39 3B 3D 35 34
+24302c352f393b3d3534
 Key (ASCII): STORM
 
 
