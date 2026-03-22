@@ -116,44 +116,17 @@ Encoded message: eWR3bGZkcV9mZHBocnY=
       title:    'THE LIGHTNING LOCK',
       subtitle: 'XOR Cipher',
       difficulty: '★★★★☆',
-      story:    'The fourth lock crackles with electrical energy. It uses an XOR cipher — the simplest yet most elegant encryption. A key has been left nearby.',
-      puzzle:   `XOR Encrypted message (hex):
+      story:    '8 into 2.',
+      puzzle:   ` hex:
 2B 07 13 16 55 0E 1A 55 01 1A 55 58 53 45 0B
 
 Key (ASCII): STORM
 
-Decryption: XOR each byte with repeating key
 
-Key bytes:  S=83  T=84  O=79  R=82  M=77
-
-Byte-by-byte:
-0x2B(43)  XOR S(83) = 43  XOR 83  = 120 = 'x'
-0x07(7)   XOR T(84) = 7   XOR 84  = 83  = 'S' → wait
-
-Let me recalculate correctly:
-Hex:  2B  07  13  16  55  0E  1A  55  01  1A  55  58  53  45  0B
-Dec:  43   7  19  22  85  14  26  85   1  26  85  88  83  69  11
-Key:  83  84  79  82  77  83  84  79  82  77  83  84  79  82  77
-
-XOR:
-43 XOR 83  = 120 = x
-7  XOR 84  = 91  → recalc: 00000111 XOR 01010100 = 01010011 = 83 = S → no
-7  XOR 84: 0000 0111
-           0101 0100
-         = 0101 0011 = 83 = S
-
-Actually working result:
-43^83=120=x  nope, let me just give them clean data:
-
-Plaintext:  flag{xor_storm}
-
-The XOR of "flag{xor_storm}" with key "STORM" repeating produces the ciphertext.
-Decrypt by XOR-ing ciphertext with the same key "STORM".
-
-The flag is: flag{xor_storm}`,
-      hint:     'XOR each ciphertext byte with the corresponding key byte (repeating key "STORM"). XOR is its own inverse — encrypt and decrypt use the same operation.',
-      answer:   'flag{xor_storm}',
-      flag:     'flag{xor_storm}',
+`,
+      hint:     'find volkswagen from the input device infront of you',
+      answer:   'flag{wdcgbjorgy}',
+      flag:     'flag{wdcgbjorgy}',
     },
 
     // ── Challenge 5: JWT ────────────────────
@@ -170,7 +143,7 @@ The flag is: flag{xor_storm}`,
 eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyIjoid2F0c29uIiwicm9sZSI6InZpc2l0b3IiLCJ0YXJnZXQiOiJpcmVuZSJ9.
 
 
-The flag is: flag{irene}`,
+`,
       hint:     ' target is ur key . Use the alg:none vulnerability to forge a valid token without a signature.',
       answer:   'flag{irene}',
       flag:     'flag{irene}',
