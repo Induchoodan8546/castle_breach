@@ -17,7 +17,7 @@ const CP4 = (() => {
       number:   1,
       icon:     '🖼',
       title:    'computer language',
-      subtitle: 'Steganography',
+      subtitle: 'binary',
       difficulty: '★★★★☆',
       story:    'Chuck Norris can speak binary in ASCII.',
       puzzle:   `A message has been hidden in binary:
